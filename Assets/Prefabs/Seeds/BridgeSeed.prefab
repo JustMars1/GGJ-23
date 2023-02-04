@@ -108,6 +108,7 @@ MonoBehaviour:
   animationTime: 0.5
   bridgeAnimationTime: 1.1
   bridgePiece: {fileID: 6580342025827081258, guid: 87761004a9bc34743b48d0c51fe997d8, type: 3}
+  poofPrefab: {fileID: 7472128634130831700, guid: c06de9fbf489d674789a255339c3e871, type: 3}
 --- !u!50 &6735929006140543143
 Rigidbody2D:
   serializedVersion: 4
