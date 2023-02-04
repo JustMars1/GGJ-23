@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -108,12 +108,12 @@ TextureImporter:
       name: Roots_animation_1
       rect:
         serializedVersion: 2
-        x: 250
-        y: 19
-        width: 6
-        height: 4
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 192
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -129,12 +129,12 @@ TextureImporter:
       name: Roots_animation_2
       rect:
         serializedVersion: 2
-        x: 374
-        y: 16
-        width: 10
-        height: 11
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 320
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -150,12 +150,12 @@ TextureImporter:
       name: Roots_animation_3
       rect:
         serializedVersion: 2
-        x: 495
-        y: 15
-        width: 17
-        height: 13
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 448
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -171,12 +171,12 @@ TextureImporter:
       name: Roots_animation_4
       rect:
         serializedVersion: 2
-        x: 619
-        y: 13
-        width: 21
-        height: 15
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 576
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: Roots_animation_5
       rect:
         serializedVersion: 2
-        x: 738
-        y: 8
-        width: 30
-        height: 20
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 704
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -213,12 +213,12 @@ TextureImporter:
       name: Roots_animation_6
       rect:
         serializedVersion: 2
-        x: 854
-        y: 3
-        width: 42
-        height: 25
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 832
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -234,12 +234,12 @@ TextureImporter:
       name: Roots_animation_7
       rect:
         serializedVersion: 2
-        x: 969
-        y: 3
-        width: 55
-        height: 25
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        x: 960
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -256,11 +256,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1088
-        y: 3
+        y: 0
         width: 64
-        height: 25
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -277,11 +277,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1216
-        y: 4
+        y: 0
         width: 64
-        height: 25
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

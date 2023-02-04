@@ -106,6 +106,9 @@ MonoBehaviour:
   platform: {fileID: 4232656022673311688, guid: 36edc28a76070e74485b1093b6840382, type: 3}
   vine: {fileID: 4941545638655146935, guid: 65d82fee92ecf3240a11540f2037598b, type: 3}
   animationTime: 0.5
+  bridgeAnimationTime: 1.1
+  bridgePiece: {fileID: 0}
+  poofPrefab: {fileID: 8145950664778433156, guid: a3f6b77cde5314c4fa6066f9d8d186b3, type: 3}
 --- !u!50 &5235183050644084641
 Rigidbody2D:
   serializedVersion: 4

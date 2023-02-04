@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6735929006140543147}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.063, y: -0.014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -106,6 +106,9 @@ MonoBehaviour:
   platform: {fileID: 0}
   vine: {fileID: 0}
   animationTime: 0.5
+  bridgeAnimationTime: 1.1
+  bridgePiece: {fileID: 6580342025827081258, guid: 87761004a9bc34743b48d0c51fe997d8, type: 3}
+  poofPrefab: {fileID: 7472128634130831700, guid: c06de9fbf489d674789a255339c3e871, type: 3}
 --- !u!50 &6735929006140543143
 Rigidbody2D:
   serializedVersion: 4
@@ -142,4 +145,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.058577895

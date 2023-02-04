@@ -19,6 +19,12 @@ public class Seed : MonoBehaviour
     public GameObject vine;
 
     public float animationTime = 0.5f;
+    public float bridgeAnimationTime = 1.1f;
+
+    public GameObject bridgePiece;
+
+    // Poofs
+    public GameObject poofPrefab;
 
     Rigidbody2D rb2D;
 
@@ -83,7 +89,7 @@ public class Seed : MonoBehaviour
             }
 
             // Here to instantiate bridge grow animation
-            if (secondNode != null)
+            if (secondNode != null && Vector3.Distance(transform.position, secondNode.transform.position) < bridgeRange)
             {
                 StartCoroutine(InstantiateBridgeCo(secondNode));
             }
@@ -106,6 +112,8 @@ public class Seed : MonoBehaviour
     {
         yield return new WaitForSeconds(animationTime);
         Instantiate(platform, transform.position, Quaternion.identity);
+        Instantiate(poofPrefab, transform.position, Quaternion.identity);
+
         Destroy(gameObject);
     }
 
@@ -118,7 +126,35 @@ public class Seed : MonoBehaviour
 
     IEnumerator InstantiateBridgeCo(GameObject secondNode)
     {
-        yield return new WaitForSeconds(animationTime);
+        float distance = 0;
+        float y, x, maxDistance;
+        y = secondNode.transform.position.y - transform.position.y;
+        x = secondNode.transform.position.x - transform.position.x;
+        Vector3 dir = (secondNode.transform.position - transform.position).normalized;
+
+        GameObject rootObject = Instantiate(bridgePiece, transform.position, Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(y, x))));
+        Vector2 tempVector = rootObject.GetComponentInChildren<SpriteRenderer>().size;
+        maxDistance = (secondNode.transform.position - transform.position).magnitude + 0.2f;
+        tempVector.x = maxDistance;
+
+        SpriteRenderer renderer = rootObject.GetComponentInChildren<SpriteRenderer>();
+
+        while (distance < 1)
+        {
+            tempVector.x = maxDistance * distance;
+            renderer.size = tempVector;
+
+            renderer.transform.position = transform.position + dir * distance / 2;
+
+            distance += Time.deltaTime;
+            yield return null;
+        }
+
+        distance = 1;
+        tempVector.x = maxDistance * distance;
+        renderer.size = tempVector;
+        renderer.transform.position = transform.position + dir * distance / 2;
+
         Destroy(gameObject);
         Destroy(secondNode);
     }
