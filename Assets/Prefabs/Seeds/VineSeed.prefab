@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5136805752318461972}
+  - component: {fileID: 8150944433118913282}
   - component: {fileID: 5136805752318461975}
-  - component: {fileID: 5136805752318461974}
   - component: {fileID: 5136805752318462440}
   - component: {fileID: 4039908751055065698}
   m_Layer: 7
@@ -35,6 +35,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8150944433118913282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136805752318462443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d7b4253347a4cba91d57f12b2aae02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 3
+  poofDuration: 0.5
+  poofPrefab: {fileID: 8178931803550492459, guid: 8c1859eedf1812d4a9240dcd40c8a12c, type: 3}
+  vinePrefab: {fileID: 4941545638655146935, guid: 65d82fee92ecf3240a11540f2037598b, type: 3}
 --- !u!212 &5136805752318461975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,9 +89,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: 282436127
+  m_SortingLayer: 4
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fb6e8bacc8301164385b6d68b1044da5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -87,28 +103,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5136805752318461974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5136805752318462443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f59b80cb17d4fee4b8f4df7beb03b0aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 1
-  seedType: 1
-  bridgeRange: 3
-  stuckSeed: 0
-  platform: {fileID: 4232656022673311688, guid: 36edc28a76070e74485b1093b6840382, type: 3}
-  vine: {fileID: 4941545638655146935, guid: 65d82fee92ecf3240a11540f2037598b, type: 3}
-  animationTime: 0.5
-  bridgeAnimationTime: 1.1
-  bridgePiece: {fileID: 0}
-  poofPrefab: {fileID: 8178931803550492459, guid: 8c1859eedf1812d4a9240dcd40c8a12c, type: 3}
 --- !u!50 &5136805752318462440
 Rigidbody2D:
   serializedVersion: 4
