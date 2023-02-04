@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float throwForce = 5.0f;
+    public float aimSensitivity = 180.0f;
 
     public bool isGrounded = true;
     public Transform groundCheckPositionLeft;
@@ -17,10 +18,10 @@ public class PlayerControl : MonoBehaviour
     public float groundCheckRadius;
     public LayerMask groundCheckLayer;
 
+    public GameObject[] seedPrefabList;
+    public Transform throwRotator;
     public Transform throwPosition;
-    public GameObject[] seedList;
-    public GameObject throwRotator;
-    public GameObject throwIndicator;
+    public SpriteRenderer throwIndicator;
     public Sprite throwIndicatorSprite;
 
     public Animator animator;
@@ -31,33 +32,38 @@ public class PlayerControl : MonoBehaviour
     bool fireUp;
     bool fireDown;
     public bool verticalMovement = false;
-    GameObject selectedGrenade;
-    GameObject throwable;
 
     Rigidbody2D rb;
 
     // Spawnpoint for our heroine
     public GameObject spawnPoint;
     public GameObject checkPoint;
+
+    SeedType selectedGrenede;
+
+    Rigidbody2D currentThrowable;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        selectedGrenade = seedList[0];
     }
 
     void Update()
     {
         directionalInput.x = Input.GetAxisRaw("Horizontal");
-        if(Input.GetAxisRaw("Horizontal") < 0)
+        directionalInput.y = Input.GetAxisRaw("Vertical");
+        jump |= Input.GetButtonDown("Jump");
+        bool fireHeldNow = Input.GetButton("Fire1");
+
+        if (directionalInput.x < 0.0f)
         {
-            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
-        else if(Input.GetAxisRaw("Horizontal") > 0)
+        else if (directionalInput.x > 0.0f)
         {
-            gameObject.transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         }
-        
-        if(Input.GetAxisRaw("Horizontal") != 0 && isGrounded)
+
+        if (directionalInput.x != 0.0f && isGrounded)
         {
             animator.SetBool("Run", true);
         }
@@ -65,11 +71,6 @@ public class PlayerControl : MonoBehaviour
         {
             animator.SetBool("Run", false);
         }
-
-        directionalInput.y = Input.GetAxisRaw("Vertical");
-        jump |= Input.GetButtonDown("Jump");
-
-        bool fireHeldNow = Input.GetButton("Fire1");
 
         if (fireHeld != fireHeldNow)
         {
@@ -79,7 +80,7 @@ public class PlayerControl : MonoBehaviour
 
         for (int i = 1; i <= 3; i++)
         {
-            if (Input.GetKeyDown(i.ToString())) 
+            if (Input.GetKeyDown(i.ToString()))
             {
                 OnGrenadeChanged(i - 1);
             }
@@ -88,26 +89,26 @@ public class PlayerControl : MonoBehaviour
         fireHeld |= fireHeldNow;
 
         // Throw indicator movement
-        if(Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
         {
-            throwRotator.transform.Rotate(0, 0, 1);
+            throwRotator.transform.Rotate(Vector3.forward * aimSensitivity * Time.deltaTime);
         }
+
         if (Input.GetKey(KeyCode.E))
         {
-            throwRotator.transform.Rotate(0, 0, -1);
+            throwRotator.transform.Rotate(Vector3.back * aimSensitivity * Time.deltaTime);
         }
     }
 
-    void OnGrenadeChanged(int grenadeType) 
+    void OnGrenadeChanged(int grenadeType)
     {
-        selectedGrenade = seedList[grenadeType];
-
+        selectedGrenede = (SeedType)grenadeType;
         // Change granede sprite etc.
     }
 
     void FixedUpdate()
     {
-        if(Physics2D.OverlapCircle(groundCheckPositionLeft.position, groundCheckRadius, groundCheckLayer) ||
+        if (Physics2D.OverlapCircle(groundCheckPositionLeft.position, groundCheckRadius, groundCheckLayer) ||
             Physics2D.OverlapCircle(groundCheckPositionRight.position, groundCheckRadius, groundCheckLayer))
         {
             isGrounded = true;
@@ -116,49 +117,53 @@ public class PlayerControl : MonoBehaviour
         else
         {
             isGrounded = false;
-            if(rb.velocity.y > 0)
+            if (rb.velocity.y > 0)
             {
                 animator.SetBool("GoingUp", true);
             }
-            if(rb.velocity.y < 0)
+            if (rb.velocity.y < 0)
             {
                 animator.SetBool("GoingUp", false);
                 animator.SetBool("GoingDown", true);
             }
         }
-        
+
         Vector2 vel = rb.velocity;
         vel.x = directionalInput.x * speed;
         rb.velocity = vel;
 
-        if(verticalMovement)
+        if (verticalMovement)
         {
             vel.y = directionalInput.y * speed;
             rb.velocity = vel;
         }
 
-        if (jump && isGrounded) 
+        if (jump && isGrounded)
         {
             // Try jump
             vel.y = jumpForce;
             rb.velocity = vel;
         }
 
-        if (fireDown) 
+        if (fireDown && currentThrowable == null)
         {
             // Prepare throw
-            throwPosition.transform.GetComponent<SpriteRenderer>().sprite = selectedGrenade.transform.GetComponent<SpriteRenderer>().sprite;
-            throwIndicator.transform.GetComponent<SpriteRenderer>().sprite = throwIndicatorSprite;
+            throwIndicator.sprite = throwIndicatorSprite;
+            currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenede], throwPosition).GetComponent<Rigidbody2D>();
+            currentThrowable.simulated = false;
+            currentThrowable.GetComponent<Collider2D>().enabled = false;
         }
 
-        if (fireUp) 
+        if (fireUp && currentThrowable != null)
         {
             // Execute throw
-            throwPosition.transform.GetComponent<SpriteRenderer>().sprite = null;
-            throwIndicator.transform.GetComponent<SpriteRenderer>().sprite = null;
-            throwable = Instantiate(selectedGrenade, throwPosition.position, Quaternion.identity);
-            Rigidbody2D rbThrowable = throwable.transform.GetComponent<Rigidbody2D>();
-            rbThrowable.AddForce(throwForce * (throwIndicator.transform.position - throwable.transform.position), ForceMode2D.Impulse);
+            throwIndicator.sprite = null;
+
+            currentThrowable.simulated = true;
+            currentThrowable.GetComponent<Collider2D>().enabled = true;
+            currentThrowable.transform.SetParent(null);
+            currentThrowable.AddForce(throwForce * (throwIndicator.transform.position - currentThrowable.transform.position).normalized, ForceMode2D.Impulse);
+            currentThrowable = null;
         }
 
         fireHeld = false;
@@ -167,22 +172,22 @@ public class PlayerControl : MonoBehaviour
         jump = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "Vine")
+        if (other.gameObject.CompareTag("Vine"))
         {
             verticalMovement = true;
         }
 
-        if(collision.gameObject.CompareTag("Checkpoint"))
+        if (other.gameObject.CompareTag("Checkpoint"))
         {
-            spawnPoint.transform.position = collision.transform.position;
+            spawnPoint.transform.position = other.transform.position;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "Vine")
+        if (other.gameObject.CompareTag("Vine"))
         {
             verticalMovement = false;
         }
@@ -190,7 +195,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Deathline"))
+        if (collision.gameObject.CompareTag("Deathline"))
         {
             gameObject.transform.position = spawnPoint.transform.position;
         }
