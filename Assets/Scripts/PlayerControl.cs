@@ -49,7 +49,7 @@ public class PlayerControl : MonoBehaviour
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
         }
-        else
+        else if(Input.GetAxisRaw("Horizontal") > 0)
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
