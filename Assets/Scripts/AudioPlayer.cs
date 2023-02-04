@@ -9,7 +9,7 @@ public class AudioPlayer : MonoBehaviour
 
     static int musicCounter = 0, sfxCounter = 0;
 
-    public static void Play(AudioClip clip, bool isMusic = false, bool variablePitch = false, bool variableVolume = false)
+    public static AudioSource Play(AudioClip clip, bool isMusic = false, bool variablePitch = false, bool variableVolume = false)
     {
         string goName = isMusic ? "Music" + musicCounter++ : "SFX" + sfxCounter++;
         AudioSource audio = new GameObject(goName).AddComponent<AudioSource>();
@@ -17,14 +17,15 @@ public class AudioPlayer : MonoBehaviour
         audio.outputAudioMixerGroup = mixer.FindMatchingGroups(isMusic ? "Music" : "SFX")[0];
         audio.clip = clip;
         audio.volume = variableVolume ? Random.Range(0.9f, 1.0f) : 1.0f;
-        audio.pitch = variablePitch ? Random.Range(0.9f, 1.1f) : 1.0f;
+        audio.pitch = variablePitch ? Random.Range(0.95f, 1.05f) : 1.0f;
         audio.loop = isMusic;
+        audio.Play();
 
         if (!isMusic)
         {
             Destroy(audio.gameObject, clip.length);
         }
 
-        audio.Play();
+        return audio;
     }
 }

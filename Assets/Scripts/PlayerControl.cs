@@ -2,38 +2,80 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 5.0f;
 
-    // Start is called before the first frame update
-    void Start()
+    Vector2 directionalInput;
+    bool jump;
+    bool fireHeld;
+    bool fireUp;
+    bool fireDown;
+    int selectedGranede = 0;
+
+    Rigidbody2D rb;
+
+    void Awake()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 position = transform.position;
-        Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
+        directionalInput.x = Input.GetAxis("Horizontal");
+        directionalInput.y = Input.GetAxis("Vertical");
+        jump |= Input.GetButtonDown("Jump");
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        bool fireHeldNow = Input.GetButton("Fire1");
+
+        if (fireHeld != fireHeldNow)
         {
-            position.x -= speed * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            position.x += speed * Time.deltaTime;
+            fireDown |= fireHeldNow;
+            fireUp |= !fireHeldNow;
         }
 
-        position.x = Mathf.Clamp(position.x, leftEdge.x + 1f, rightEdge.x - 1f);
-        transform.position = position;
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        for (int i = 1; i <= 3; i++)
         {
-            //Shoot();
+            if (Input.GetKeyDown(i.ToString())) 
+            {
+                OnGranedeChanged(i - 1);
+            }
         }
+
+        fireHeld |= fireHeldNow;
+    }
+
+    void OnGranedeChanged(int granedeType) 
+    {
+        selectedGranede = granedeType;
+
+        // Change granede sprite etc.
+    }
+
+    void FixedUpdate()
+    {
+        Vector2 vel = rb.velocity;
+        vel.x = directionalInput.x * speed;
+        rb.velocity = vel;
+
+        if (jump) 
+        {
+            // Try jump
+        }
+
+        if (fireDown) 
+        {
+            // Prepare throw
+        }
+
+        if (fireUp) 
+        {
+            // Execute throw
+        }
+
+        fireHeld = false;
+        fireDown = false;
+        fireUp = false;
     }
 }

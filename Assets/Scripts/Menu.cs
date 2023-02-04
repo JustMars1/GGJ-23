@@ -6,41 +6,78 @@ using TMPro;
 
 public class Menu : MonoBehaviour
 {
+    public AudioClip buttonSoundClip;
     public Slider musicSlider, sfxSlider;
-    public Button playBt, optionsBt, closeBt;
+    public Button playBt, optionsBt, quitBt, closeBt;
     public RectTransform startPanel, optionsPanel;
+    public Toggle fullScreenToggle, vSyncToggle;
 
     const string MUSIC_VOLUME_KEY = "MusicVolume";
     const string SFX_VOLUME_KEY = "SFXVolume";
 
-    static float musicVolume = 0.5f;
-    static float sfxVolume = 0.5f;
+    const float VOLUME_MIN_VALUE = 0.00001f;
+
+    bool started = false;
 
     void Awake()
     {
-        musicSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChanged(); });
+        // Volume slider values range from 0 to 10 (integers)
+        sfxSlider.value = PlayerPrefs.GetInt(SFX_VOLUME_KEY, 2);
+        musicSlider.value = PlayerPrefs.GetInt(MUSIC_VOLUME_KEY, 2);
         sfxSlider.onValueChanged.AddListener(delegate { OnSFXVolumeChanged(); });
+        musicSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChanged(); });
 
         playBt.onClick.AddListener(Play);
         optionsBt.onClick.AddListener(Options);
         closeBt.onClick.AddListener(Close);
+        quitBt.onClick.AddListener(Quit);
+
+        fullScreenToggle.isOn = QualitySettings.vSyncCount == 1;
+        vSyncToggle.isOn = Screen.fullScreen;
+
+        fullScreenToggle.onValueChanged.AddListener(delegate { OnFullScreenToggled(); });
+        vSyncToggle.onValueChanged.AddListener(delegate { OnVSyncToggled(); });
     }
 
-    void OnMusicVolumeChanged()
+    void Start()
     {
-        musicVolume = musicSlider.value;
-        AudioPlayer.mixer.SetFloat(MUSIC_VOLUME_KEY, Mathf.Log10(musicVolume) * 20);
+        OnSFXVolumeChanged();
+        OnMusicVolumeChanged();
+        OnFullScreenToggled();
+        OnVSyncToggled();
+
+        optionsPanel.gameObject.SetActive(false);
+        closeBt.gameObject.SetActive(false);
+        startPanel.gameObject.SetActive(true);
+
+        started = true;
+    }
+
+    public void PlayBtClickSound()
+    {
+        if (started)
+        {
+            AudioPlayer.Play(buttonSoundClip, isMusic: false, variablePitch: true, variableVolume: true);
+        }
     }
 
     void OnSFXVolumeChanged()
     {
-        sfxVolume = sfxSlider.value;
-        AudioPlayer.mixer.SetFloat(SFX_VOLUME_KEY, Mathf.Log10(musicVolume) * 20);
+        PlayerPrefs.SetInt(SFX_VOLUME_KEY, (int)sfxSlider.value);
+        float sfxVolume = Mathf.Clamp((float)sfxSlider.value / sfxSlider.maxValue, VOLUME_MIN_VALUE, 1.0f);
+        AudioPlayer.mixer.SetFloat(SFX_VOLUME_KEY, Mathf.Log10(sfxVolume) * 20);
+    }
+
+    void OnMusicVolumeChanged()
+    {
+        PlayerPrefs.SetInt(MUSIC_VOLUME_KEY, (int)musicSlider.value);
+        float musicVolume = Mathf.Clamp((float)musicSlider.value / musicSlider.maxValue, VOLUME_MIN_VALUE, 1.0f);
+        AudioPlayer.mixer.SetFloat(MUSIC_VOLUME_KEY, Mathf.Log10(musicVolume) * 20);
     }
 
     void Play()
     {
-
+        PlayBtClickSound();
     }
 
     void Options()
@@ -48,6 +85,9 @@ public class Menu : MonoBehaviour
         optionsPanel.gameObject.SetActive(true);
         closeBt.gameObject.SetActive(true);
         startPanel.gameObject.SetActive(false);
+        sfxSlider.Select();
+
+        PlayBtClickSound();
     }
 
     void Close()
@@ -55,5 +95,34 @@ public class Menu : MonoBehaviour
         optionsPanel.gameObject.SetActive(false);
         closeBt.gameObject.SetActive(false);
         startPanel.gameObject.SetActive(true);
+        optionsBt.Select();
+
+        PlayBtClickSound();
+    }
+
+    void Quit() 
+    {
+        PlayBtClickSound();
+        Application.Quit();
+    }
+
+    void OnFullScreenToggled()
+    {
+        if (fullScreenToggle.isOn)
+        {
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
+        }
+        else
+        {
+            Screen.SetResolution(1600, 900, FullScreenMode.Windowed);
+        }
+
+        PlayBtClickSound();
+    }
+
+    void OnVSyncToggled()
+    {
+        QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
+        PlayBtClickSound();
     }
 }
