@@ -171,7 +171,17 @@ public class PlayerControl : MonoBehaviour
             currentThrowable = null;
         }
 
-        throwIndicator.sprite = aiming || fireHeld ? throwIndicatorSprite : null;
+        if (aiming || fireHeld) 
+        {
+            throwIndicator.sprite = throwIndicatorSprite;
+        }
+        else 
+        {
+            throwIndicator.sprite = null;
+            Vector3 rot = throwIndicator.transform.eulerAngles;
+            rot.z = playerRenderer.transform.localScale.x > 0 ? 0 : 180;
+            throwRotator.transform.eulerAngles = rot;
+        }
 
         fireHeld = false;
         fireDown = false;
