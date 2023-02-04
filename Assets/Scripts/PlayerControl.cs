@@ -36,6 +36,9 @@ public class PlayerControl : MonoBehaviour
 
     Rigidbody2D rb;
 
+    // Spawnpoint for our heroine
+    public GameObject spawnPoint;
+    public GameObject checkPoint;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -170,6 +173,11 @@ public class PlayerControl : MonoBehaviour
         {
             verticalMovement = true;
         }
+
+        if(collision.gameObject.CompareTag("Checkpoint"))
+        {
+            spawnPoint.transform.position = collision.transform.position;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -180,4 +188,11 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Deathline"))
+        {
+            gameObject.transform.position = spawnPoint.transform.position;
+        }
+    }
 }
