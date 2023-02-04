@@ -72,27 +72,6 @@ public class PlayerControl : MonoBehaviour
         {
             throwRotator.transform.Rotate(0, 0, -1);
         }
-
-        if (fireDown)
-        {
-            // Prepare throw
-            throwPosition.transform.GetComponent<SpriteRenderer>().sprite = selectedGrenade.transform.GetComponent<SpriteRenderer>().sprite;
-            throwIndicator.transform.GetComponent<SpriteRenderer>().sprite = throwIndicatorSprite;
-        }
-
-        if (fireUp)
-        {
-            // Execute throw
-            throwPosition.transform.GetComponent<SpriteRenderer>().sprite = null;
-            throwIndicator.transform.GetComponent<SpriteRenderer>().sprite = null;
-            throwable = Instantiate(selectedGrenade, throwPosition.position, Quaternion.identity);
-            Rigidbody2D rbThrowable = throwable.transform.GetComponent<Rigidbody2D>();
-            rbThrowable.AddForce(throwForce * (throwIndicator.transform.position - throwable.transform.position), ForceMode2D.Impulse);
-        }
-
-        fireHeld = false;
-        fireDown = false;
-        fireUp = false;
     }
 
     void OnGrenadeChanged(int grenadeType) 
@@ -131,7 +110,7 @@ public class PlayerControl : MonoBehaviour
             rb.velocity = vel;
         }
 
-        /*if (fireDown) 
+        if (fireDown) 
         {
             // Prepare throw
             throwPosition.transform.GetComponent<SpriteRenderer>().sprite = selectedGrenade.transform.GetComponent<SpriteRenderer>().sprite;
@@ -150,7 +129,7 @@ public class PlayerControl : MonoBehaviour
 
         fireHeld = false;
         fireDown = false;
-        fireUp = false;*/
+        fireUp = false;
         jump = false;
     }
 
@@ -169,4 +148,5 @@ public class PlayerControl : MonoBehaviour
             verticalMovement = false;
         }
     }
+
 }
