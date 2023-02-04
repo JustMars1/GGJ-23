@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6735929006140543140}
   - component: {fileID: 6735929006140543141}
   - component: {fileID: 6735929006140543142}
-  - component: {fileID: 6735929006140543146}
   - component: {fileID: 6735929006140543143}
+  - component: {fileID: 1301602969073341900}
   m_Layer: 7
   m_Name: BridgeSeed
   m_TagString: BridgeSeed
@@ -106,32 +106,6 @@ MonoBehaviour:
   platform: {fileID: 0}
   vine: {fileID: 0}
   animationTime: 0.5
---- !u!61 &6735929006140543146
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6735929006140543147}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.265625, y: 0.4375, z: 0.484375, w: 0.21875}
-    pivot: {x: 0.3969581, y: 0.5957855}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.25523114, y: 0.3491974}
-  m_EdgeRadius: 0
 --- !u!50 &6735929006140543143
 Rigidbody2D:
   serializedVersion: 4
@@ -152,4 +126,20 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!58 &1301602969073341900
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6735929006140543147}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.15

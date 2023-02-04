@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum SeedType
 {
-    PlatformSeed, VineSeed, BridgeSeed
+    PlatformSeed = 0, VineSeed = 1, BridgeSeed = 2
 }
 
 public class Seed : MonoBehaviour
@@ -12,30 +12,30 @@ public class Seed : MonoBehaviour
     public float timer = 3f;
     public SeedType seedType;
     public float bridgeRange = 3f;
-    public bool stuckSeed  = false;
-    
+    public bool stuckSeed = false;
+
     // Prefabs for the gameobjects that the seed instantiates
     public GameObject platform;
     public GameObject vine;
 
     public float animationTime = 0.5f;
 
-    // Start is called before the first frame update
-    void Start()
+    Rigidbody2D rb2D;
+
+    void Awake()
     {
-        
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(timer > 0)
+        if (timer > 0)
         {
             timer -= Time.deltaTime;
         }
         else
         {
-            if(seedType == SeedType.PlatformSeed)
+            if (seedType == SeedType.PlatformSeed)
             {
                 GrowPlatform();
             }
@@ -44,36 +44,37 @@ public class Seed : MonoBehaviour
 
     void GrowPlatform()
     {
-        Destroy(gameObject.GetComponent<Rigidbody2D>());
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(rb2D);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
         // Here to instantiate platform grow animation
-        Invoke("InstantiatePlatform", animationTime);
+        StartCoroutine(InstantiatePlatformCo());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision != null && collision.gameObject.tag == "Platform" && seedType == SeedType.BridgeSeed)
+        if (collision != null && collision.gameObject.CompareTag("Platform") && seedType == SeedType.BridgeSeed)
         {
-            Destroy(gameObject.GetComponent<Rigidbody2D>());
+            Destroy(rb2D);
+            GetComponent<Collider2D>().enabled = false;
             stuckSeed = true;
-                
+
             // Finding closest bridge seed
             GameObject[] bridgeSeeds = GameObject.FindGameObjectsWithTag("BridgeSeed");
             GameObject secondNode = null;
-            foreach(GameObject seed in bridgeSeeds)
+            foreach (GameObject seed in bridgeSeeds)
             {
                 // Checking if the bridge seed is this bridge seed
                 if (!GameObject.ReferenceEquals(gameObject, seed) &&
-                    Vector3.Distance(gameObject.transform.position, seed.transform.position) < bridgeRange &&
+                    Vector3.Distance(transform.position, seed.transform.position) < bridgeRange &&
                     seed.GetComponent<Seed>().stuckSeed == true)
                 {
                     // Setting the seed as the second node seed if it is closer than the previous
-                    if(secondNode == null)
+                    if (secondNode == null)
                     {
                         secondNode = seed;
                     }
-                    else if (Vector3.Distance(gameObject.transform.position, seed.transform.position) <
-                        Vector3.Distance(gameObject.transform.position, secondNode.transform.position))
+                    else if (Vector3.Distance(transform.position, seed.transform.position) < Vector3.Distance(transform.position, secondNode.transform.position))
                     {
                         secondNode = seed;
                     }
@@ -81,43 +82,44 @@ public class Seed : MonoBehaviour
                 }
             }
 
-            if(secondNode != null)
-            {
-                Destroy(gameObject);
-                Destroy(secondNode);
-            }
-                
             // Here to instantiate bridge grow animation
-            Invoke("InstantiateBridge", animationTime);
+            if (secondNode != null)
+            {
+                StartCoroutine(InstantiateBridgeCo(secondNode));
+            }
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision != null && collision.gameObject.tag == "Platform" && seedType == SeedType.VineSeed)
+        if (collision != null && collision.gameObject.CompareTag("Platform") && seedType == SeedType.VineSeed)
         {
             if (timer <= 0)
             {
                 // Here to instantiate vine grow animation
-                Invoke("InstantiateVine", animationTime);
+                StartCoroutine(InstantiateVineCo());
             }
         }
     }
-
-    void InstantiatePlatform()
+    
+    IEnumerator InstantiatePlatformCo()
     {
+        yield return new WaitForSeconds(animationTime);
         Instantiate(platform, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
-    void InstantiateVine()
+    IEnumerator InstantiateVineCo()
     {
+        yield return new WaitForSeconds(animationTime);
         Instantiate(vine, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
-    void InstatiateBridge ()
+    IEnumerator InstantiateBridgeCo(GameObject secondNode)
     {
-
+        yield return new WaitForSeconds(animationTime);
+        Destroy(gameObject);
+        Destroy(secondNode);
     }
 }
