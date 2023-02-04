@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
     public AudioClip buttonSoundClip;
     public Slider musicSlider, sfxSlider;
     public Button playBt, optionsBt, quitBt, closeBt;
-    public RectTransform startPanel, optionsPanel;
+    public RectTransform startPanel, optionsPanel, pausePanel;
     public Toggle fullScreenToggle, vSyncToggle;
 
     const string MUSIC_VOLUME_KEY = "MusicVolume";
@@ -17,7 +17,10 @@ public class Menu : MonoBehaviour
 
     const float VOLUME_MIN_VALUE = 0.00001f;
 
-    bool started = false;
+    bool initialized = false;
+
+    [HideInInspector] public bool paused = false;
+    [HideInInspector] public bool inMainMenu = true;
 
     void Awake()
     {
@@ -50,12 +53,12 @@ public class Menu : MonoBehaviour
         closeBt.gameObject.SetActive(false);
         startPanel.gameObject.SetActive(true);
 
-        started = true;
+        initialized = true;
     }
 
     public void PlayBtClickSound()
     {
-        if (started)
+        if (initialized)
         {
             AudioPlayer.Play(buttonSoundClip, isMusic: false, variablePitch: true, variableVolume: true);
         }
@@ -85,6 +88,7 @@ public class Menu : MonoBehaviour
         optionsPanel.gameObject.SetActive(true);
         closeBt.gameObject.SetActive(true);
         startPanel.gameObject.SetActive(false);
+        pausePanel.gameObject.SetActive(false);
         sfxSlider.Select();
 
         PlayBtClickSound();
@@ -94,7 +98,9 @@ public class Menu : MonoBehaviour
     {
         optionsPanel.gameObject.SetActive(false);
         closeBt.gameObject.SetActive(false);
-        startPanel.gameObject.SetActive(true);
+
+        startPanel.gameObject.SetActive(inMainMenu);
+        pausePanel.gameObject.SetActive(!inMainMenu);
         optionsBt.Select();
 
         PlayBtClickSound();
