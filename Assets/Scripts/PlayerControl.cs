@@ -24,6 +24,8 @@ public class PlayerControl : MonoBehaviour
     public SpriteRenderer throwIndicator;
     public Sprite throwIndicatorSprite;
 
+    public SpriteRenderer playerRenderer;
+
     public Animator animator;
 
     Vector2 directionalInput;
@@ -32,6 +34,8 @@ public class PlayerControl : MonoBehaviour
     bool fireUp;
     bool fireDown;
     public bool verticalMovement = false;
+
+    bool aiming;
 
     Rigidbody2D rb;
 
@@ -42,6 +46,7 @@ public class PlayerControl : MonoBehaviour
     SeedType selectedGrenede;
 
     Rigidbody2D currentThrowable;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -56,11 +61,11 @@ public class PlayerControl : MonoBehaviour
 
         if (directionalInput.x < 0.0f)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            playerRenderer.transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (directionalInput.x > 0.0f)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            playerRenderer.transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (directionalInput.x != 0.0f && isGrounded)
@@ -89,14 +94,17 @@ public class PlayerControl : MonoBehaviour
         fireHeld |= fireHeldNow;
 
         // Throw indicator movement
+        aiming = false;
         if (Input.GetKey(KeyCode.Q))
         {
             throwRotator.transform.Rotate(Vector3.forward * aimSensitivity * Time.deltaTime);
+            aiming = true;
         }
 
         if (Input.GetKey(KeyCode.E))
         {
             throwRotator.transform.Rotate(Vector3.back * aimSensitivity * Time.deltaTime);
+            aiming = true;
         }
     }
 
@@ -148,7 +156,6 @@ public class PlayerControl : MonoBehaviour
         if (fireDown && currentThrowable == null)
         {
             // Prepare throw
-            throwIndicator.sprite = throwIndicatorSprite;
             currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenede], throwPosition).GetComponent<Rigidbody2D>();
             currentThrowable.simulated = false;
             currentThrowable.GetComponent<Collider2D>().enabled = false;
@@ -157,14 +164,14 @@ public class PlayerControl : MonoBehaviour
         if (fireUp && currentThrowable != null)
         {
             // Execute throw
-            throwIndicator.sprite = null;
-
             currentThrowable.simulated = true;
             currentThrowable.GetComponent<Collider2D>().enabled = true;
             currentThrowable.transform.SetParent(null);
             currentThrowable.AddForce(throwForce * (throwIndicator.transform.position - currentThrowable.transform.position).normalized, ForceMode2D.Impulse);
             currentThrowable = null;
         }
+
+        throwIndicator.sprite = aiming || fireHeld ? throwIndicatorSprite : null;
 
         fireHeld = false;
         fireDown = false;
