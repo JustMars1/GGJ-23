@@ -22,6 +22,8 @@ public class PlayerControl : MonoBehaviour
     public GameObject throwIndicator;
     public Sprite throwIndicatorSprite;
 
+    public Animator animator;
+
     Vector2 directionalInput;
     bool jump;
     bool fireHeld;
@@ -87,10 +89,20 @@ public class PlayerControl : MonoBehaviour
             Physics2D.OverlapCircle(groundCheckPositionRight.position, groundCheckRadius, groundCheckLayer))
         {
             isGrounded = true;
+            animator.SetBool("GoingDown", false);
         }
         else
         {
             isGrounded = false;
+            if(rb.velocity.y > 0)
+            {
+                animator.SetBool("GoingUp", true);
+            }
+            if(rb.velocity.y < 0)
+            {
+                animator.SetBool("GoingDown", false);
+                animator.SetBool("GoingDown", true);
+            }
         }
         
         Vector2 vel = rb.velocity;
