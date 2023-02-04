@@ -47,9 +47,6 @@ TagManager:
   - name: Background
     uniqueID: 4129284975
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Vine
     uniqueID: 361005767
     locked: 0
@@ -59,6 +56,15 @@ TagManager:
   - name: Bridge
     uniqueID: 325275441
     locked: 0
+  - name: Player
+    uniqueID: 2263871181
+    locked: 0
   - name: Seed
     uniqueID: 282436127
+    locked: 0
+  - name: Poof
+    uniqueID: 3273527965
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
