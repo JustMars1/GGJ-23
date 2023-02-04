@@ -24,6 +24,8 @@ public class PlayerControl : MonoBehaviour
     public SpriteRenderer throwIndicator;
     public Sprite throwIndicatorSprite;
 
+    public SpriteRenderer playerRenderer;
+
     public Animator animator;
 
     Vector2 directionalInput;
@@ -59,11 +61,11 @@ public class PlayerControl : MonoBehaviour
 
         if (directionalInput.x < 0.0f)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            playerRenderer.transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (directionalInput.x > 0.0f)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            playerRenderer.transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (directionalInput.x != 0.0f && isGrounded)
