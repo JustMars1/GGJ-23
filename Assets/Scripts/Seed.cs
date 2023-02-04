@@ -23,6 +23,11 @@ public class Seed : MonoBehaviour
 
     public GameObject bridgePiece;
 
+    // Poofs
+    public GameObject poofPlat;
+    public GameObject poofVine;
+    public GameObject poofBridge;
+
     Rigidbody2D rb2D;
 
     void Awake()
@@ -109,6 +114,8 @@ public class Seed : MonoBehaviour
     {
         yield return new WaitForSeconds(animationTime);
         Instantiate(platform, transform.position, Quaternion.identity);
+        Instantiate(poofPlat, transform.position, Quaternion.identity);
+
         Destroy(gameObject);
     }
 
