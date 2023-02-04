@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3e01b73ca4cd4c2439e895ef50b58ea4
+guid: 664205295db42c94fa639a703c7f3f56
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,11 +101,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: littlegirl_run_0
+      name: littlegirl_jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a9b62eb755530840acf351baddf8493
-      internalID: 2129138549
+      spriteID: ae0156e02dbe37440b083e375e0646fd
+      internalID: 307102757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: littlegirl_run_1
+      name: littlegirl_jump_1
       rect:
         serializedVersion: 2
         x: 64
@@ -140,134 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4a88b25e709f594daf0eb9a7abe3c88
-      internalID: 610837644
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: littlegirl_run_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 233caa2eca924814fa3e46d74d48f677
-      internalID: -614666215
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: littlegirl_run_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ade7fcacfcd98684c93980674c1bfac1
-      internalID: 1944501413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: littlegirl_run_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e2e42cd05c4a21b4fbb356a8cbb1a76c
-      internalID: -635831020
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: littlegirl_run_5
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d42e8616e8e34d4cbed7a91aeb135e5
-      internalID: 2143802878
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: littlegirl_run_6
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6d5517fe0a73f14b819bea60bf7f5b0
-      internalID: 521110439
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: littlegirl_run_7
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45e375285d4ab8a41bd8df8fff2fc7f7
-      internalID: -676292989
+      spriteID: 0ccc81b6068dabf4cb89a2e3dd70fe38
+      internalID: 859963697
       vertices: []
       indices: 
       edges: []
@@ -283,14 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      littlegirl_run_0: 2129138549
-      littlegirl_run_6: 521110439
-      littlegirl_run_2: -614666215
-      littlegirl_run_1: 610837644
-      littlegirl_run_7: -676292989
-      littlegirl_run_4: -635831020
-      littlegirl_run_3: 1944501413
-      littlegirl_run_5: 2143802878
+      littlegirl_jump_1: 859963697
+      littlegirl_jump_0: 307102757
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -7,6 +7,8 @@ TagManager:
   - Platform
   - BridgeSeed
   - Vine
+  - Deathline
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

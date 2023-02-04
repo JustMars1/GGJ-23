@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 664205295db42c94fa639a703c7f3f56
+guid: 6281b6f18416e1c4daa6b0e4c79043a5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,11 +101,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: littlegirl_jump_0
+      name: littlegirl_idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae0156e02dbe37440b083e375e0646fd
-      internalID: 307102757
+      spriteID: fa77336f4d4f31d4b99b1bd895102b1f
+      internalID: 1197598025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: littlegirl_jump_1
+      name: littlegirl_idle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -140,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ccc81b6068dabf4cb89a2e3dd70fe38
-      internalID: 859963697
+      spriteID: 93f63dfecc348d64b98000a694e63094
+      internalID: 1865012351
       vertices: []
       indices: 
       edges: []
@@ -157,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      littlegirl_jump_1: 859963697
-      littlegirl_jump_0: 307102757
+      littlegirl_idle_0: 1197598025
+      littlegirl_idle_1: 1865012351
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
