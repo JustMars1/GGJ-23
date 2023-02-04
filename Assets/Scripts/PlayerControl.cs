@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
@@ -44,6 +45,24 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         directionalInput.x = Input.GetAxisRaw("Horizontal");
+        if(Input.GetAxisRaw("Horizontal") < 0)
+        {
+            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else
+        {
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
+        
+        if(Input.GetAxisRaw("Horizontal") != 0 && isGrounded)
+        {
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
+        }
+
         directionalInput.y = Input.GetAxisRaw("Vertical");
         jump |= Input.GetButtonDown("Jump");
 
@@ -100,7 +119,7 @@ public class PlayerControl : MonoBehaviour
             }
             if(rb.velocity.y < 0)
             {
-                animator.SetBool("GoingDown", false);
+                animator.SetBool("GoingUp", false);
                 animator.SetBool("GoingDown", true);
             }
         }
