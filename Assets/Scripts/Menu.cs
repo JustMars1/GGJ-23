@@ -19,9 +19,6 @@ public class Menu : MonoBehaviour
 
     bool initialized = false;
 
-    [HideInInspector] public bool paused = false;
-    [HideInInspector] public bool inMainMenu = true;
-
     void Awake()
     {
         // Volume slider values range from 0 to 10 (integers)
@@ -48,10 +45,6 @@ public class Menu : MonoBehaviour
         OnMusicVolumeChanged();
         OnFullScreenToggled();
         OnVSyncToggled();
-
-        optionsPanel.gameObject.SetActive(false);
-        closeBt.gameObject.SetActive(false);
-        startPanel.gameObject.SetActive(true);
 
         initialized = true;
     }
@@ -81,14 +74,12 @@ public class Menu : MonoBehaviour
     void Play()
     {
         PlayBtClickSound();
+        GameManager.Instance.LoadNextLevel();
     }
 
     void Options()
     {
         optionsPanel.gameObject.SetActive(true);
-        closeBt.gameObject.SetActive(true);
-        startPanel.gameObject.SetActive(false);
-        pausePanel.gameObject.SetActive(false);
         sfxSlider.Select();
 
         PlayBtClickSound();
@@ -97,12 +88,7 @@ public class Menu : MonoBehaviour
     void Close()
     {
         optionsPanel.gameObject.SetActive(false);
-        closeBt.gameObject.SetActive(false);
-
-        startPanel.gameObject.SetActive(inMainMenu);
-        pausePanel.gameObject.SetActive(!inMainMenu);
         optionsBt.Select();
-
         PlayBtClickSound();
     }
 

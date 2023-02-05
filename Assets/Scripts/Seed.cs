@@ -9,11 +9,11 @@ public enum SeedType
 
 public abstract class Seed : MonoBehaviour
 {
-    public float timer = 3f;
+    public int timer = 3;
     public float poofDuration = 0.5f;
     public GameObject poofPrefab;
 
-    protected Rigidbody2D rb2D;
+    [HideInInspector] public Rigidbody2D rb2D;
     protected bool exploding;
 
     void Awake()
@@ -22,7 +22,12 @@ public abstract class Seed : MonoBehaviour
     }
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(timer);
+        while(timer > 0) 
+        {
+            yield return new WaitForSeconds(1);
+            timer--;
+        }
+        
         exploding = true;
         OnExplode();
     }

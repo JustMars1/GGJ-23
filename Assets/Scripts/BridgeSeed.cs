@@ -6,13 +6,10 @@ public class BridgeSeed : Seed
 {
     public GameObject bridgePrefab;
     public float bridgeRange = 10f;
-    public float bridgeAnimationTime = 1.1f;
     [HideInInspector] public bool isStuck = false;
+    [HideInInspector] public bool growing = false;
 
-    protected override void OnExplode()
-    {
-
-    }
+    protected override void OnExplode() { }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -24,7 +21,7 @@ public class BridgeSeed : Seed
 
             // Finding closest bridge seed
             GameObject[] bridgeSeeds = GameObject.FindGameObjectsWithTag("BridgeSeed");
-            GameObject secondNode = null;
+            BridgeSeed secondNode = null;
 
             float shortestDist = float.MaxValue;
 
@@ -43,16 +40,18 @@ public class BridgeSeed : Seed
                 }
 
                 BridgeSeed bridgeSeed = seed.GetComponent<BridgeSeed>();
-                if (bridgeSeed.isStuck)
+                if (bridgeSeed != null && bridgeSeed.isStuck && !bridgeSeed.growing)
                 {
-                    secondNode = seed;
+                    secondNode = bridgeSeed;
                 }
             }
 
             // Here to instantiate bridge grow animation
             if (secondNode != null)
             {
-                StartCoroutine(InstantiateBridgeCo(secondNode));
+                growing = true;
+                secondNode.growing = true;
+                StartCoroutine(InstantiateBridgeCo(secondNode.gameObject));
             }
         }
     }
