@@ -10,6 +10,7 @@ TagManager:
   - Deathline
   - Checkpoint
   - Bridge
+  - Tree
   layers:
   - Default
   - TransparentFX

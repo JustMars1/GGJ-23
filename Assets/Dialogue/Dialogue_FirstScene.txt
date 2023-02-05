@@ -1,7 +1,7 @@
 Child
 Why did you call for me?
 Tree
-Did you go outiside of the Grove?
+Did you go outside of the Grove?
 Child
 ...
 Tree
@@ -46,5 +46,3 @@ Tree
 ...This is the destiny that I never wished for you...
 Tree
 Good bye now, my Child!
-Tree
-*pushes the Child away from the Grove with its roots and seals the entrance*
