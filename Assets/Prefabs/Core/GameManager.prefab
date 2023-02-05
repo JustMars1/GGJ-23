@@ -119,12 +119,14 @@ MonoBehaviour:
   menu: {fileID: 8513499163066483076}
   gameplayUI: {fileID: 343148343147355049}
   fade: {fileID: 2831917492414605358}
+  player: {fileID: 0}
   gameState: 2
   nextLevelIndex: 0
   vines: []
   platforms: []
   bridges: []
   seeds: []
+  pickups: []
 --- !u!1001 &2949152798965463984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -505,6 +507,10 @@ PrefabInstance:
     - target: {fileID: 2415428500834880852, guid: b26444210a12c4f0d88d22220d002877, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3913405832339635420, guid: b26444210a12c4f0d88d22220d002877, type: 3}
+      propertyPath: m_Name
+      value: CountText3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b26444210a12c4f0d88d22220d002877, type: 3}

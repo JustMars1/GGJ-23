@@ -24,13 +24,13 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    public List<GameObject> vines = new List<GameObject>();
-    public List<GameObject> platforms = new List<GameObject>();
-    public List<GameObject> bridges = new List<GameObject>();
+    [HideInInspector] public List<GameObject> vines = new List<GameObject>();
+    [HideInInspector] public List<GameObject> platforms = new List<GameObject>();
+    [HideInInspector] public List<GameObject> bridges = new List<GameObject>();
 
-    public List<GameObject> seeds = new List<GameObject>();
+    [HideInInspector] public List<GameObject> seeds = new List<GameObject>();
 
-    public List<GameObject> pickups = new List<GameObject>();
+    [HideInInspector] public List<GameObject> pickups = new List<GameObject>();
 
     bool paused;
     public bool Paused
