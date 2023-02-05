@@ -9,6 +9,7 @@ TagManager:
   - Vine
   - Deathline
   - Checkpoint
+  - Bridge
   layers:
   - Default
   - TransparentFX
@@ -43,6 +44,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4129284975
+    locked: 0
+  - name: Foreground
+    uniqueID: 2647994819
+    locked: 0
+  - name: Vine
+    uniqueID: 361005767
+    locked: 0
+  - name: Platform
+    uniqueID: 4167373269
+    locked: 0
+  - name: Bridge
+    uniqueID: 325275441
+    locked: 0
+  - name: Player
+    uniqueID: 2263871181
+    locked: 0
+  - name: Seed
+    uniqueID: 282436127
+    locked: 0
+  - name: Poof
+    uniqueID: 3273527965
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

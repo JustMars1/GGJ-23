@@ -1928,10 +1928,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7313292898788267578, guid: 3407956f6d26d416b9925209e041d37c, type: 3}
-      propertyPath: jumpForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7313292898788267578, guid: 3407956f6d26d416b9925209e041d37c, type: 3}
       propertyPath: checkPoint
       value: 
       objectReference: {fileID: 1364601934}
@@ -1939,9 +1935,5 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 467719712}
-    - target: {fileID: 7313292898788267578, guid: 3407956f6d26d416b9925209e041d37c, type: 3}
-      propertyPath: throwForce
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3407956f6d26d416b9925209e041d37c, type: 3}

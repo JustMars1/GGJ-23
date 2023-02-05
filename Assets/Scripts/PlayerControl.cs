@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
@@ -33,7 +34,7 @@ public class PlayerControl : MonoBehaviour
     bool fireHeld;
     bool fireUp;
     bool fireDown;
-    public bool verticalMovement = false;
+    [HideInInspector] public bool verticalMovement = false;
 
     bool aiming;
 
@@ -43,9 +44,17 @@ public class PlayerControl : MonoBehaviour
     public GameObject spawnPoint;
     public GameObject checkPoint;
 
-    SeedType selectedGrenede;
+    SeedType selectedGrenade;
 
-    Rigidbody2D currentThrowable;
+    [HideInInspector] public Seed currentThrowable = null;
+
+    bool facingRight = true;
+
+    float angle = 0;
+
+    float fireCooldownEndTime = 0;
+
+    const float fireCooldown = 0.2f;
 
     void Awake()
     {
@@ -54,6 +63,11 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance != null && GameManager.Instance.Paused) 
+        {
+            return;
+        }
+
         directionalInput.x = Input.GetAxisRaw("Horizontal");
         directionalInput.y = Input.GetAxisRaw("Vertical");
         jump |= Input.GetButtonDown("Jump");
@@ -61,11 +75,20 @@ public class PlayerControl : MonoBehaviour
 
         if (directionalInput.x < 0.0f)
         {
-            playerRenderer.transform.localScale = new Vector3(-1, 1, 1);
+            facingRight = false;
         }
         else if (directionalInput.x > 0.0f)
         {
+            facingRight = true;
+        }
+
+        if (facingRight)
+        {
             playerRenderer.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            playerRenderer.transform.localScale = new Vector3(-1, 1, 1);
         }
 
         if (directionalInput.x != 0.0f && isGrounded)
@@ -91,27 +114,61 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        fireHeld |= fireHeldNow;
+        fireHeld = fireHeldNow;
 
         // Throw indicator movement
         aiming = false;
+
+        float mult = facingRight ? 1 : -1;
         if (Input.GetKey(KeyCode.Q))
         {
-            throwRotator.transform.Rotate(Vector3.forward * aimSensitivity * Time.deltaTime);
+            float newAngle = angle + mult * aimSensitivity * Time.deltaTime;
+
+            if (directionalInput.x == 0.0f && (newAngle < -90 || newAngle > 90))
+            {
+                facingRight = !facingRight;
+            }
+
+            angle = Mathf.Clamp(newAngle, -90, 90);
             aiming = true;
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            throwRotator.transform.Rotate(Vector3.back * aimSensitivity * Time.deltaTime);
+            float newAngle = angle - mult * aimSensitivity * Time.deltaTime;
+
+            if (directionalInput.x == 0.0f && (newAngle < -90 || newAngle > 90))
+            {
+                facingRight = !facingRight;
+            }
+
+            angle = Mathf.Clamp(newAngle, -90, 90);
             aiming = true;
         }
+
+        Vector3 rot = throwRotator.eulerAngles;
+        rot.z = facingRight ? angle : 180 - angle;
+        throwRotator.eulerAngles = rot;
     }
 
     void OnGrenadeChanged(int grenadeType)
     {
-        selectedGrenede = (SeedType)grenadeType;
-        // Change granede sprite etc.
+        if (selectedGrenade == (SeedType)grenadeType)
+        {
+            return;
+        }
+
+        selectedGrenade = (SeedType)grenadeType;
+        if (currentThrowable != null)
+        {
+            Destroy(currentThrowable.gameObject);
+            currentThrowable = null;
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.gameplayUI.HighlightSelectedGrenade((int)selectedGrenade);
+        }
     }
 
     void FixedUpdate()
@@ -153,27 +210,33 @@ public class PlayerControl : MonoBehaviour
             rb.velocity = vel;
         }
 
-        if (fireDown && currentThrowable == null)
+        if (fireDown && currentThrowable == null && Time.time > fireCooldownEndTime)
         {
             // Prepare throw
-            currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenede], throwPosition).GetComponent<Rigidbody2D>();
-            currentThrowable.simulated = false;
+            currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenade], throwPosition).GetComponent<Seed>();
+            currentThrowable.sender = this;
+            currentThrowable.rb2D.simulated = false;
             currentThrowable.GetComponent<Collider2D>().enabled = false;
         }
 
-        if (fireUp && currentThrowable != null)
+        if (fireUp && currentThrowable != null && currentThrowable.rb2D != null)
         {
             // Execute throw
-            currentThrowable.simulated = true;
+            currentThrowable.rb2D.simulated = true;
             currentThrowable.GetComponent<Collider2D>().enabled = true;
             currentThrowable.transform.SetParent(null);
-            currentThrowable.AddForce(throwForce * (throwIndicator.transform.position - currentThrowable.transform.position).normalized, ForceMode2D.Impulse);
+            currentThrowable.rb2D.AddForce(throwForce * (throwIndicator.transform.position - currentThrowable.transform.position).normalized, ForceMode2D.Impulse);
             currentThrowable = null;
+
+            fireCooldownEndTime = Time.time + fireCooldown;
         }
 
         throwIndicator.sprite = aiming || fireHeld ? throwIndicatorSprite : null;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.gameplayUI.DisplayAimInfo(aiming || fireHeld);
+        }
 
-        fireHeld = false;
         fireDown = false;
         fireUp = false;
         jump = false;

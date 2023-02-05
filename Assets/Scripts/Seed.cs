@@ -1,161 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public enum SeedType
 {
     PlatformSeed = 0, VineSeed = 1, BridgeSeed = 2
 }
 
-public class Seed : MonoBehaviour
+public abstract class Seed : MonoBehaviour
 {
-    public float timer = 3f;
-    public SeedType seedType;
-    public float bridgeRange = 3f;
-    public bool stuckSeed = false;
-
-    // Prefabs for the gameobjects that the seed instantiates
-    public GameObject platform;
-    public GameObject vine;
-
-    public float animationTime = 0.5f;
-    public float bridgeAnimationTime = 1.1f;
-
-    public GameObject bridgePiece;
-
-    // Poofs
+    public TextMeshPro timerText;
+    public int timer = 3;
+    public float poofDuration = 0.5f;
     public GameObject poofPrefab;
 
-    Rigidbody2D rb2D;
+    [HideInInspector] public Rigidbody2D rb2D;
+    protected bool exploding;
+
+    [HideInInspector] public PlayerControl sender;
+
+    Vector3 timerOffset;
 
     void Awake()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        timerOffset = timerText.transform.position - transform.position;
     }
 
-    void Update()
+    IEnumerator Start()
     {
-        if (timer > 0)
+        if (GameManager.Instance != null) 
         {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            if (seedType == SeedType.PlatformSeed)
-            {
-                GrowPlatform();
-            }
-        }
-    }
-
-    void GrowPlatform()
-    {
-        Destroy(rb2D);
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<Collider2D>().enabled = false;
-        // Here to instantiate platform grow animation
-        StartCoroutine(InstantiatePlatformCo());
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision != null && collision.gameObject.CompareTag("Platform") && seedType == SeedType.BridgeSeed)
-        {
-            Destroy(rb2D);
-            GetComponent<Collider2D>().enabled = false;
-            stuckSeed = true;
-
-            // Finding closest bridge seed
-            GameObject[] bridgeSeeds = GameObject.FindGameObjectsWithTag("BridgeSeed");
-            GameObject secondNode = null;
-            foreach (GameObject seed in bridgeSeeds)
-            {
-                // Checking if the bridge seed is this bridge seed
-                if (!GameObject.ReferenceEquals(gameObject, seed) &&
-                    Vector3.Distance(transform.position, seed.transform.position) < bridgeRange &&
-                    seed.GetComponent<Seed>().stuckSeed == true)
-                {
-                    // Setting the seed as the second node seed if it is closer than the previous
-                    if (secondNode == null)
-                    {
-                        secondNode = seed;
-                    }
-                    else if (Vector3.Distance(transform.position, seed.transform.position) < Vector3.Distance(transform.position, secondNode.transform.position))
-                    {
-                        secondNode = seed;
-                    }
-
-                }
-            }
-
-            // Here to instantiate bridge grow animation
-            if (secondNode != null && Vector3.Distance(transform.position, secondNode.transform.position) < bridgeRange)
-            {
-                StartCoroutine(InstantiateBridgeCo(secondNode));
-            }
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision != null && collision.gameObject.CompareTag("Platform") && seedType == SeedType.VineSeed)
-        {
-            if (timer <= 0)
-            {
-                // Here to instantiate vine grow animation
-                StartCoroutine(InstantiateVineCo());
-            }
-        }
-    }
-    
-    IEnumerator InstantiatePlatformCo()
-    {
-        yield return new WaitForSeconds(animationTime);
-        Instantiate(platform, transform.position, Quaternion.identity);
-        Instantiate(poofPrefab, transform.position, Quaternion.identity);
-
-        Destroy(gameObject);
-    }
-
-    IEnumerator InstantiateVineCo()
-    {
-        yield return new WaitForSeconds(animationTime);
-        Instantiate(vine, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }
-
-    IEnumerator InstantiateBridgeCo(GameObject secondNode)
-    {
-        float distance = 0;
-        float y, x, maxDistance;
-        y = secondNode.transform.position.y - transform.position.y;
-        x = secondNode.transform.position.x - transform.position.x;
-        Vector3 dir = (secondNode.transform.position - transform.position).normalized;
-
-        GameObject rootObject = Instantiate(bridgePiece, transform.position, Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(y, x))));
-        Vector2 tempVector = rootObject.GetComponentInChildren<SpriteRenderer>().size;
-        maxDistance = (secondNode.transform.position - transform.position).magnitude + 0.2f;
-        tempVector.x = maxDistance;
-
-        SpriteRenderer renderer = rootObject.GetComponentInChildren<SpriteRenderer>();
-
-        while (distance < 1)
-        {
-            tempVector.x = maxDistance * distance;
-            renderer.size = tempVector;
-
-            renderer.transform.position = transform.position + dir * distance / 2;
-
-            distance += Time.deltaTime;
-            yield return null;
+            GameManager.Instance.seeds.Add(gameObject);
         }
 
-        distance = 1;
-        tempVector.x = maxDistance * distance;
-        renderer.size = tempVector;
-        renderer.transform.position = transform.position + dir * distance / 2;
+        while (timer > 0)
+        {
+            timerText.text = timer.ToString();
+            yield return new WaitForSeconds(1);
+            timer--;
+        }
 
-        Destroy(gameObject);
-        Destroy(secondNode);
+        timerText.text = "";
+
+
+        rb2D.simulated = true;
+        GetComponent<Collider2D>().enabled = true;
+        transform.SetParent(null);
+
+        if (sender.currentThrowable == this)
+        {
+            sender.currentThrowable = null;
+        }
+
+        exploding = true;
+        OnExplode();
     }
+
+    void LateUpdate()
+    {
+        timerText.transform.eulerAngles = Vector3.zero;
+        timerText.transform.position = transform.position + timerOffset;
+    }
+
+    protected abstract void OnExplode();
 }
