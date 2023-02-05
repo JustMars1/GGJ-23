@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         menu.startPanel.gameObject.SetActive(isMainMenu);
         menu.optionsBt.gameObject.SetActive(isMainMenu);
 
-        gameplayUI.gameObject.SetActive(!isMainMenu);
+        gameplayUI.gameObject.SetActive(GameManager.Instance.gameState == GameState.Gameplay);
         menu.pausePanel.gameObject.SetActive(false);
         menu.optionsPanel.gameObject.SetActive(false);
 
@@ -88,11 +88,11 @@ public class GameManager : MonoBehaviour
             afterFade.AddListener(fade.FadeIn);
             afterFade.AddListener(ResetLevel);
 
-            if (player != null) 
+            if (player != null)
             {
                 afterFade.AddListener(player.ResetSpawnPoint);
             }
-            
+
             fade.FadeOut(afterFade);
             Paused = false;
         });
@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
 
         pickups.Clear();
 
-        if (player != null) 
+        if (player != null)
         {
             for (int i = 0; i < player.grenadeCounts.Length; i++)
             {
@@ -161,6 +161,13 @@ public class GameManager : MonoBehaviour
             }
 
             player.UpdateUICounters();
+        }
+
+        GameObject[] checkPoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        for (int i = 0; i < checkPoints.Length; i++)
+        {
+            checkPoints[i].GetComponent<Animator>().SetBool("PlayAnimation", false);
+            checkPoints[i].GetComponent<Animator>().SetBool("DeGrowth", true);
         }
     }
 
