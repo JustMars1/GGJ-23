@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public enum GameState
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
 {
     public Menu menu;
     public GameplayUI gameplayUI;
+    public Fade fade;
 
     public GameState gameState = GameState.MainMenu;
     public int nextLevelIndex;
@@ -39,6 +41,11 @@ public class GameManager : MonoBehaviour
             {
                 menu.pausePanel.gameObject.SetActive(paused);
                 menu.optionsBt.gameObject.SetActive(paused);
+
+                if (!paused)
+                {
+                    menu.optionsPanel.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -73,14 +80,19 @@ public class GameManager : MonoBehaviour
         menu.restartBt.onClick.AddListener(() =>
         {
             menu.PlayBtClickSound();
-            ResetLevel();
+            UnityEvent afterFade = new UnityEvent();
+            afterFade.AddListener(fade.FadeIn);
+            afterFade.AddListener(ResetLevel);
+            fade.FadeOut(afterFade);
             Paused = false;
         });
 
         menu.mainMenuBt.onClick.AddListener(() =>
         {
             menu.PlayBtClickSound();
-            SceneManager.LoadScene("Main");
+            UnityEvent afterFade = new UnityEvent();
+            afterFade.AddListener(delegate { SceneManager.LoadScene("Main"); });
+            fade.FadeOut(afterFade);
         });
 
         Paused = false;
@@ -127,7 +139,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (gameState != GameState.MainMenu && Input.GetKeyDown(KeyCode.Escape))
+        if (gameState != GameState.MainMenu && fade.fadeInCompleted && Input.GetKeyDown(KeyCode.Escape))
         {
             Paused = !Paused;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class Menu : MonoBehaviour
 {
@@ -75,7 +76,9 @@ public class Menu : MonoBehaviour
     void Play()
     {
         PlayBtClickSound();
-        GameManager.Instance.LoadNextLevel();
+        UnityEvent afterFade = new UnityEvent();
+        afterFade.AddListener(GameManager.Instance.LoadNextLevel);
+        GameManager.Instance.fade.FadeOut(afterFade);
     }
 
     void Options()
