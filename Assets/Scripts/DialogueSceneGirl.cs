@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class DialogueSceneGirl : MonoBehaviour
 {
@@ -88,6 +90,13 @@ public class DialogueSceneGirl : MonoBehaviour
             treeReached = true;
             animator.SetBool("Run", false);
             tbManager.EnableTextBox();
+        }
+
+        if (collision.CompareTag("Finish"))
+        {
+            UnityEvent afterFade = new UnityEvent();
+            afterFade.AddListener(GameManager.Instance.LoadNextLevel);
+            GameManager.Instance.fade.FadeOut(afterFade);
         }
     }
 }
