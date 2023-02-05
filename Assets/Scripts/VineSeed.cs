@@ -10,14 +10,7 @@ public class VineSeed : Seed
 
     HashSet<GameObject> collidingObjects = new HashSet<GameObject>();
 
-    protected override void OnExplode()
-    {
-        if (!exploded && collidingObjects.Count > 0)
-        {
-            exploded = true;
-            StartCoroutine(InstantiateVineCo());
-        }
-    }
+    protected override void OnExplode() { }
 
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -26,7 +19,7 @@ public class VineSeed : Seed
             collidingObjects.Add(other.gameObject);
         }
 
-        if (exploding && !exploded && collidingObjects.Count > 0)
+        if (!exploded && collidingObjects.Count > 0)
         {
             exploded = true;
             StartCoroutine(InstantiateVineCo());
