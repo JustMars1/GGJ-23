@@ -40,6 +40,7 @@ public class PlatformSeed : Seed
     {
         AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
+        Destroy(poof, poofDuration);
         yield return new WaitForSeconds(poofDuration);
         GameObject platform = Instantiate(platformPrefab, transform.position, Quaternion.identity);
 
@@ -48,7 +49,6 @@ public class PlatformSeed : Seed
             GameManager.Instance.platforms.Add(platform);
         }
 
-        Destroy(poof);
         Destroy(gameObject);
     }
 }
