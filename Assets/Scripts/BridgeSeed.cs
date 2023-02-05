@@ -98,6 +98,7 @@ public class BridgeSeed : Seed
     IEnumerator InstantiateBridgeCo(GameObject secondNode)
     {
         {
+            AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
             GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
             Destroy(poof, poofDuration);
             Destroy(gameObject.GetComponent<SpriteRenderer>());
@@ -133,6 +134,7 @@ public class BridgeSeed : Seed
         renderer.transform.position = origin + dir * targetDistance / 2;
 
         {
+            AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
             GameObject poof = Instantiate(poofPrefab, secondNode.transform.position, Quaternion.identity);
             Destroy(poof, poofDuration);
             Destroy(secondNode.GetComponent<SpriteRenderer>());

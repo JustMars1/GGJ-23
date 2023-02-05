@@ -14,6 +14,7 @@ public abstract class Seed : MonoBehaviour
     public int timer = 3;
     public float poofDuration = 0.5f;
     public GameObject poofPrefab;
+    public AudioClip[] poofSounds;
 
     [HideInInspector] public Rigidbody2D rb2D;
     protected bool exploding;
