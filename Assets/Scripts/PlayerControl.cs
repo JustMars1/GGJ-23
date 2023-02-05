@@ -47,6 +47,10 @@ public class PlayerControl : MonoBehaviour
 
     Rigidbody2D currentThrowable;
 
+    bool facingRight = true;
+
+    float angle = 0;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,10 +66,12 @@ public class PlayerControl : MonoBehaviour
         if (directionalInput.x < 0.0f)
         {
             playerRenderer.transform.localScale = new Vector3(-1, 1, 1);
+            facingRight = false;
         }
         else if (directionalInput.x > 0.0f)
         {
             playerRenderer.transform.localScale = new Vector3(1, 1, 1);
+            facingRight = true;
         }
 
         if (directionalInput.x != 0.0f && isGrounded)
@@ -97,15 +103,19 @@ public class PlayerControl : MonoBehaviour
         aiming = false;
         if (Input.GetKey(KeyCode.Q))
         {
-            throwRotator.transform.Rotate(Vector3.forward * aimSensitivity * Time.deltaTime);
+            angle = Mathf.Clamp(angle + aimSensitivity * Time.deltaTime, -90, 90);
             aiming = true;
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            throwRotator.transform.Rotate(Vector3.back * aimSensitivity * Time.deltaTime);
+            angle = Mathf.Clamp(angle - aimSensitivity * Time.deltaTime, -90, 90);
             aiming = true;
         }
+
+        Vector3 rot = throwRotator.eulerAngles;
+        rot.z = facingRight ? angle : 180 - angle;
+        throwRotator.eulerAngles = rot;
     }
 
     void OnGrenadeChanged(int grenadeType)
@@ -171,16 +181,13 @@ public class PlayerControl : MonoBehaviour
             currentThrowable = null;
         }
 
-        if (aiming || fireHeld) 
+        if (aiming || fireHeld)
         {
             throwIndicator.sprite = throwIndicatorSprite;
         }
-        else 
+        else
         {
             throwIndicator.sprite = null;
-            Vector3 rot = throwIndicator.transform.eulerAngles;
-            rot.z = playerRenderer.transform.localScale.x > 0 ? 0 : 180;
-            throwRotator.transform.eulerAngles = rot;
         }
 
         fireHeld = false;
