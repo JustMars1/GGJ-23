@@ -56,14 +56,21 @@ public class PlayerControl : MonoBehaviour
 
     const float fireCooldown = 0.2f;
 
+    [HideInInspector] public int[] grenadeCounts = new int[3];
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void Start() 
+    {
+        UpdateUICounters();
+    }
+
     void Update()
     {
-        if (GameManager.Instance != null && GameManager.Instance.Paused) 
+        if (GameManager.Instance != null && GameManager.Instance.Paused)
         {
             return;
         }
@@ -151,6 +158,17 @@ public class PlayerControl : MonoBehaviour
         throwRotator.eulerAngles = rot;
     }
 
+    public void UpdateUICounters()
+    {
+        if (GameManager.Instance != null)
+        {
+            for (int i = 0; i < grenadeCounts.Length; i++)
+            {
+                GameManager.Instance.gameplayUI.UpdateGrenadeCount(i, grenadeCounts[i]);
+            }
+        }
+    }
+
     void OnGrenadeChanged(int grenadeType)
     {
         if (selectedGrenade == (SeedType)grenadeType)
@@ -158,12 +176,16 @@ public class PlayerControl : MonoBehaviour
             return;
         }
 
-        selectedGrenade = (SeedType)grenadeType;
         if (currentThrowable != null)
         {
             Destroy(currentThrowable.gameObject);
+            grenadeCounts[(int)selectedGrenade]++;
             currentThrowable = null;
+
+            UpdateUICounters();
         }
+
+        selectedGrenade = (SeedType)grenadeType;
 
         if (GameManager.Instance != null)
         {
@@ -210,9 +232,11 @@ public class PlayerControl : MonoBehaviour
             rb.velocity = vel;
         }
 
-        if (fireDown && currentThrowable == null && Time.time > fireCooldownEndTime)
+        if (fireDown && currentThrowable == null && Time.time > fireCooldownEndTime && grenadeCounts[(int)selectedGrenade] > 0)
         {
             // Prepare throw
+            grenadeCounts[(int)selectedGrenade]--;
+            UpdateUICounters();
             currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenade], throwPosition).GetComponent<Seed>();
             currentThrowable.sender = this;
             currentThrowable.rb2D.simulated = false;
@@ -268,6 +292,7 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Deathline"))
         {
             gameObject.transform.position = spawnPoint.transform.position;
+            GameManager.Instance.ResetLevel();
         }
     }
 }

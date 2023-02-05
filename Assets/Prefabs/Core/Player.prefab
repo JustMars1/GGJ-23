@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 8444339162700876684}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,7 +322,6 @@ MonoBehaviour:
   throwIndicatorSprite: {fileID: 21300000, guid: 01e4272cf7ad84579bf8a731fbe4395b, type: 3}
   playerRenderer: {fileID: 5082994008937439347}
   animator: {fileID: 5826040249435700126}
-  timerText: {fileID: 0}
   verticalMovement: 0
   spawnPoint: {fileID: 0}
   checkPoint: {fileID: 0}

@@ -52,6 +52,9 @@ MonoBehaviour:
   timer: 3
   poofDuration: 0.5
   poofPrefab: {fileID: 8178931803550492459, guid: 8c1859eedf1812d4a9240dcd40c8a12c, type: 3}
+  poofSounds:
+  - {fileID: 8300000, guid: 7534f3392ba93452ea3db2f5ffb3ce0c, type: 3}
+  - {fileID: 8300000, guid: c5e4dbb83146e4b64b5da3a0b1ce047d, type: 3}
   rb2D: {fileID: 0}
   sender: {fileID: 0}
   vinePrefab: {fileID: 4941545638655146935, guid: 65d82fee92ecf3240a11540f2037598b, type: 3}
@@ -94,7 +97,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 282436127
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fb6e8bacc8301164385b6d68b1044da5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

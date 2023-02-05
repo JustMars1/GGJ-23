@@ -34,6 +34,7 @@ public class GameplayUI : MonoBehaviour
     public void UpdateGrenadeCount(int i, int count)
     {
         grenadeCountTexts[i].text = count.ToString();
+        grenadeCountTexts[i].color = count == 0 ? Color.gray : Color.white;
     }
 
     public void DisplayAimInfo(bool visible)

@@ -471,7 +471,10 @@ MonoBehaviour:
   - {fileID: 6508195780940627977}
   - {fileID: 4363426906274927099}
   - {fileID: 3991889062086570381}
-  grenadeCountTexts: []
+  grenadeCountTexts:
+  - {fileID: 70789719635219669}
+  - {fileID: 2751363348772967136}
+  - {fileID: 1161614107844288039}
 --- !u!1 &2998972737540407318
 GameObject:
   m_ObjectHideFlags: 0

@@ -247,7 +247,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 282436127
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 631fdd4ca4f1b3a4499c1183d804c9f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -273,9 +273,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 8441692428170227337}
+  useTimer: 1
   timer: 3
   poofDuration: 0.5
   poofPrefab: {fileID: 8145950664778433156, guid: a3f6b77cde5314c4fa6066f9d8d186b3, type: 3}
+  poofSounds:
+  - {fileID: 8300000, guid: c2d3ed9c3de0a40c68ec6a089c5431d8, type: 3}
+  - {fileID: 8300000, guid: 389ad9c4facf542238a09d7a214e86b7, type: 3}
   rb2D: {fileID: 0}
   sender: {fileID: 0}
   platformPrefab: {fileID: 4232656022673311688, guid: 36edc28a76070e74485b1093b6840382, type: 3}
