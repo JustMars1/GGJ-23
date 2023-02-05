@@ -159,6 +159,11 @@ public class PlayerControl : MonoBehaviour
             Destroy(currentThrowable.gameObject);
             currentThrowable = null;
         }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.gameplayUI.HighlightSelectedGrenade((int)selectedGrenade);
+        }
     }
 
     void FixedUpdate()
@@ -224,7 +229,6 @@ public class PlayerControl : MonoBehaviour
         throwIndicator.sprite = aiming || fireHeld ? throwIndicatorSprite : null;
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.gameplayUI.HighlightSelectedGrenade((int)selectedGrenade);
             GameManager.Instance.gameplayUI.DisplayAimInfo(aiming || fireHeld);
         }
 
