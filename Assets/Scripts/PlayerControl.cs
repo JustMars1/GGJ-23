@@ -8,6 +8,7 @@ using TMPro;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
 {
+    public AudioClip fallSound;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float throwForce = 5.0f;
@@ -42,7 +43,6 @@ public class PlayerControl : MonoBehaviour
 
     // Spawnpoint for our heroine
     public GameObject spawnPoint;
-    public GameObject checkPoint;
 
     SeedType selectedGrenade;
 
@@ -58,8 +58,11 @@ public class PlayerControl : MonoBehaviour
 
     [HideInInspector] public int[] grenadeCounts = new int[3];
 
+    GameObject originalSpawnPoint;
+
     void Awake()
     {
+        originalSpawnPoint = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -156,6 +159,12 @@ public class PlayerControl : MonoBehaviour
         Vector3 rot = throwRotator.eulerAngles;
         rot.z = facingRight ? angle : 180 - angle;
         throwRotator.eulerAngles = rot;
+    }
+
+    public void ResetSpawnPoint() 
+    {
+        spawnPoint = originalSpawnPoint;
+        transform.position = spawnPoint.transform.position;
     }
 
     public void UpdateUICounters()
@@ -291,6 +300,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Deathline"))
         {
+            AudioPlayer.Play(fallSound, isMusic: false, variablePitch: true, variableVolume: true);
             gameObject.transform.position = spawnPoint.transform.position;
             GameManager.Instance.ResetLevel();
         }
