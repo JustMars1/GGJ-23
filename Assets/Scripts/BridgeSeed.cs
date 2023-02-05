@@ -13,7 +13,7 @@ public class BridgeSeed : Seed
 
     protected override void OnExplode()
     {
-        if (!isStuck && exploding && collidingObjects.Count > 0)
+        if (!isStuck && collidingObjects.Count > 0)
         {
             Stick();
         }
@@ -31,7 +31,7 @@ public class BridgeSeed : Seed
             collidingObjects.Add(other.gameObject);
         }
 
-        if (!isStuck && exploding && collidingObjects.Count > 0)
+        if (!isStuck && collidingObjects.Count > 0)
         {
             Stick();
         }
