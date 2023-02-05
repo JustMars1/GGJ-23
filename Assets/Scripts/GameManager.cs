@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> seeds = new List<GameObject>();
 
+    public List<GameObject> pickups = new List<GameObject>();
+
     bool paused;
     public bool Paused
     {
@@ -135,6 +137,13 @@ public class GameManager : MonoBehaviour
         }
 
         bridges.Clear();
+
+        foreach (GameObject pickup in pickups)
+        {
+            pickup.SetActive(true);
+        }
+
+        pickups.Clear();
     }
 
     void Update()

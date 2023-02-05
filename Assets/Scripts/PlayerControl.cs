@@ -56,6 +56,8 @@ public class PlayerControl : MonoBehaviour
 
     const float fireCooldown = 0.2f;
 
+    [HideInInspector] public int[] grenadeCounts = new int[3];
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
