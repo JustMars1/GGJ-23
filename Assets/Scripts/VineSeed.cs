@@ -41,6 +41,7 @@ public class VineSeed : Seed
         GetComponent<Collider2D>().enabled = false;
         AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
+        Destroy(poof, poofDuration);
         yield return new WaitForSeconds(poofDuration);
 
         GameObject vine = Instantiate(vinePrefab, transform.position, Quaternion.identity);
@@ -50,7 +51,6 @@ public class VineSeed : Seed
             GameManager.Instance.vines.Add(vine);
         }
 
-        Destroy(poof);
         Destroy(gameObject);
     }
 }
