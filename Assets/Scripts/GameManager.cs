@@ -162,6 +162,13 @@ public class GameManager : MonoBehaviour
 
             player.UpdateUICounters();
         }
+
+        GameObject[] checkPoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+        for (int i = 0; i < checkPoints.Length; i++)
+        {
+            checkPoints[i].GetComponent<Animator>().SetBool("PlayAnimation", false);
+            checkPoints[i].GetComponent<Animator>().SetBool("DeGrowth", true);
+        }
     }
 
     void Update()
