@@ -171,12 +171,16 @@ public class PlayerControl : MonoBehaviour
             return;
         }
 
-        selectedGrenade = (SeedType)grenadeType;
         if (currentThrowable != null)
         {
             Destroy(currentThrowable.gameObject);
+            grenadeCounts[(int)selectedGrenade]++;
             currentThrowable = null;
+
+            UpdateUICounters();
         }
+
+        selectedGrenade = (SeedType)grenadeType;
 
         if (GameManager.Instance != null)
         {
@@ -223,9 +227,11 @@ public class PlayerControl : MonoBehaviour
             rb.velocity = vel;
         }
 
-        if (fireDown && currentThrowable == null && Time.time > fireCooldownEndTime)
+        if (fireDown && currentThrowable == null && Time.time > fireCooldownEndTime && grenadeCounts[(int)selectedGrenade] > 0)
         {
             // Prepare throw
+            grenadeCounts[(int)selectedGrenade]--;
+            UpdateUICounters();
             currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenade], throwPosition).GetComponent<Seed>();
             currentThrowable.sender = this;
             currentThrowable.rb2D.simulated = false;
