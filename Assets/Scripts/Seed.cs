@@ -30,7 +30,7 @@ public abstract class Seed : MonoBehaviour
 
     IEnumerator Start()
     {
-        if (GameManager.Instance != null) 
+        if (GameManager.Instance != null)
         {
             GameManager.Instance.seeds.Add(gameObject);
         }
@@ -45,7 +45,10 @@ public abstract class Seed : MonoBehaviour
         timerText.text = "";
 
 
-        rb2D.simulated = true;
+        if (rb2D != null)
+        {
+            rb2D.simulated = true;
+        }
         GetComponent<Collider2D>().enabled = true;
         transform.SetParent(null);
 
