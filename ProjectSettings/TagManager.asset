@@ -47,6 +47,9 @@ TagManager:
   - name: Background
     uniqueID: 4129284975
     locked: 0
+  - name: Foreground
+    uniqueID: 2647994819
+    locked: 0
   - name: Vine
     uniqueID: 361005767
     locked: 0

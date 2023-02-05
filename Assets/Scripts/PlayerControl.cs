@@ -29,8 +29,6 @@ public class PlayerControl : MonoBehaviour
 
     public Animator animator;
 
-    public TextMeshPro timerText;
-
     Vector2 directionalInput;
     bool jump;
     bool fireHeld;
@@ -48,7 +46,7 @@ public class PlayerControl : MonoBehaviour
 
     SeedType selectedGrenade;
 
-    Seed currentThrowable = null;
+    [HideInInspector] public Seed currentThrowable = null;
 
     bool facingRight = true;
 
@@ -111,7 +109,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        fireHeld |= fireHeldNow;
+        fireHeld = fireHeldNow;
 
         // Throw indicator movement
         aiming = false;
@@ -121,7 +119,7 @@ public class PlayerControl : MonoBehaviour
         {
             float newAngle = angle + mult * aimSensitivity * Time.deltaTime;
 
-            if (directionalInput.x == 0.0f && (newAngle < -90 || newAngle > 90)) 
+            if (directionalInput.x == 0.0f && (newAngle < -90 || newAngle > 90))
             {
                 facingRight = !facingRight;
             }
@@ -134,7 +132,7 @@ public class PlayerControl : MonoBehaviour
         {
             float newAngle = angle - mult * aimSensitivity * Time.deltaTime;
 
-            if (directionalInput.x == 0.0f && (newAngle < -90 || newAngle > 90)) 
+            if (directionalInput.x == 0.0f && (newAngle < -90 || newAngle > 90))
             {
                 facingRight = !facingRight;
             }
@@ -146,28 +144,19 @@ public class PlayerControl : MonoBehaviour
         Vector3 rot = throwRotator.eulerAngles;
         rot.z = facingRight ? angle : 180 - angle;
         throwRotator.eulerAngles = rot;
-
-        if (currentThrowable == null) 
-        {
-            timerText.text = "";
-        }
-        else 
-        {
-            timerText.text = ((int)currentThrowable.timer).ToString();
-        }
     }
 
     void OnGrenadeChanged(int grenadeType)
     {
-        if (selectedGrenade == (SeedType)grenadeType) 
+        if (selectedGrenade == (SeedType)grenadeType)
         {
             return;
         }
 
         selectedGrenade = (SeedType)grenadeType;
-        if (currentThrowable != null) 
+        if (currentThrowable != null)
         {
-            Destroy(currentThrowable);
+            Destroy(currentThrowable.gameObject);
             currentThrowable = null;
         }
     }
@@ -215,6 +204,7 @@ public class PlayerControl : MonoBehaviour
         {
             // Prepare throw
             currentThrowable = Instantiate(seedPrefabList[(int)selectedGrenade], throwPosition).GetComponent<Seed>();
+            currentThrowable.sender = this;
             currentThrowable.rb2D.simulated = false;
             currentThrowable.GetComponent<Collider2D>().enabled = false;
         }
@@ -222,7 +212,6 @@ public class PlayerControl : MonoBehaviour
         if (fireUp && currentThrowable != null && currentThrowable.rb2D != null)
         {
             // Execute throw
-
             currentThrowable.rb2D.simulated = true;
             currentThrowable.GetComponent<Collider2D>().enabled = true;
             currentThrowable.transform.SetParent(null);
@@ -232,14 +221,13 @@ public class PlayerControl : MonoBehaviour
             fireCooldownEndTime = Time.time + fireCooldown;
         }
 
-            throwIndicator.sprite = aiming || fireHeld ? throwIndicatorSprite : null;
-            if (GameManager.Instance != null) 
-            {
-                GameManager.Instance.gameplayUI.HighlightSelectedGrenade((int)selectedGrenade);
-                GameManager.Instance.gameplayUI.DisplayAimInfo(aiming || fireHeld);
-            }
+        throwIndicator.sprite = aiming || fireHeld ? throwIndicatorSprite : null;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.gameplayUI.HighlightSelectedGrenade((int)selectedGrenade);
+            GameManager.Instance.gameplayUI.DisplayAimInfo(aiming || fireHeld);
+        }
 
-        fireHeld = false;
         fireDown = false;
         fireUp = false;
         jump = false;

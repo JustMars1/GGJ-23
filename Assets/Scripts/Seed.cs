@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public enum SeedType
 {
@@ -9,6 +10,7 @@ public enum SeedType
 
 public abstract class Seed : MonoBehaviour
 {
+    public TextMeshPro timerText;
     public int timer = 3;
     public float poofDuration = 0.5f;
     public GameObject poofPrefab;
@@ -16,20 +18,45 @@ public abstract class Seed : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb2D;
     protected bool exploding;
 
+    [HideInInspector] public PlayerControl sender;
+
+    Vector3 timerOffset;
+
     void Awake()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        timerOffset = timerText.transform.position - transform.position;
     }
+
     IEnumerator Start()
     {
-        while(timer > 0) 
+        while (timer > 0)
         {
+            timerText.text = timer.ToString();
             yield return new WaitForSeconds(1);
             timer--;
         }
-        
+
+        timerText.text = "";
+
+
+        rb2D.simulated = true;
+        GetComponent<Collider2D>().enabled = true;
+        transform.SetParent(null);
+
+        if (sender.currentThrowable == this)
+        {
+            sender.currentThrowable = null;
+        }
+
         exploding = true;
         OnExplode();
+    }
+
+    void LateUpdate()
+    {
+        timerText.transform.eulerAngles = Vector3.zero;
+        timerText.transform.position = transform.position + timerOffset;
     }
 
     protected abstract void OnExplode();

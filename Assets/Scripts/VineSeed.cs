@@ -43,6 +43,9 @@ public class VineSeed : Seed
 
     IEnumerator InstantiateVineCo()
     {
+        Destroy(rb2D);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(poofDuration);
         Instantiate(vinePrefab, transform.position, Quaternion.identity);
