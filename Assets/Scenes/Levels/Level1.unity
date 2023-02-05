@@ -1201,7 +1201,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &979529249
 PrefabInstance:
@@ -1268,6 +1268,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50ee4721c34af41e8ad77371e515ac04, type: 3}
+--- !u!1001 &982784421
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.365751
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.594043
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886467, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954355008052886476, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
+      propertyPath: m_Name
+      value: EndTrigger
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: df455a1357a3a41d4a6269ffce706197, type: 3}
 --- !u!1001 &1059058619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1525,7 +1582,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1457274230
 PrefabInstance:
@@ -1848,7 +1905,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2063606516
 GameObject:
@@ -1893,7 +1950,7 @@ Transform:
   m_Children:
   - {fileID: 7558894}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2119409885
 PrefabInstance:
@@ -1906,6 +1963,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1581136789}
+    - target: {fileID: 6887926524084687046, guid: 69ac8c7b5c1f7409fb79cfa4cc0e0e2c, type: 3}
+      propertyPath: nextLevelIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8513499162089975524, guid: 69ac8c7b5c1f7409fb79cfa4cc0e0e2c, type: 3}
       propertyPath: m_Name
       value: GameManager
