@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameplayUI gameplayUI;
     public Fade fade;
 
+    public PlayerControl player;
+
     public GameState gameState = GameState.MainMenu;
     public int nextLevelIndex;
 
@@ -144,6 +146,16 @@ public class GameManager : MonoBehaviour
         }
 
         pickups.Clear();
+
+        if (player != null) 
+        {
+            for (int i = 0; i < player.grenadeCounts.Length; i++)
+            {
+                player.grenadeCounts[i] = 0;
+            }
+
+            player.UpdateUICounters();
+        }
     }
 
     void Update()

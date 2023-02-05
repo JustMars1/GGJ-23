@@ -10,8 +10,11 @@ public class PickupSeed : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            other.GetComponent<PlayerControl>().grenadeCounts[(int)type]++;
             gameObject.SetActive(false);
+            PlayerControl player = other.GetComponent<PlayerControl>();
+            player.grenadeCounts[(int)type]++;
+            GameManager.Instance.pickups.Add(gameObject);
+            player.UpdateUICounters();
         }
     }
 }
