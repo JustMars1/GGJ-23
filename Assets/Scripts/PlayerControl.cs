@@ -292,6 +292,7 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Deathline"))
         {
             gameObject.transform.position = spawnPoint.transform.position;
+            GameManager.Instance.ResetLevel();
         }
     }
 }
