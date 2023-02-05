@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameplayUI gameplayUI;
     public Fade fade;
 
+    public PlayerControl player;
+
     public GameState gameState = GameState.MainMenu;
     public int nextLevelIndex;
 
@@ -27,6 +29,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> bridges = new List<GameObject>();
 
     public List<GameObject> seeds = new List<GameObject>();
+
+    public List<GameObject> pickups = new List<GameObject>();
 
     bool paused;
     public bool Paused
@@ -135,6 +139,23 @@ public class GameManager : MonoBehaviour
         }
 
         bridges.Clear();
+
+        foreach (GameObject pickup in pickups)
+        {
+            pickup.SetActive(true);
+        }
+
+        pickups.Clear();
+
+        if (player != null) 
+        {
+            for (int i = 0; i < player.grenadeCounts.Length; i++)
+            {
+                player.grenadeCounts[i] = 0;
+            }
+
+            player.UpdateUICounters();
+        }
     }
 
     void Update()

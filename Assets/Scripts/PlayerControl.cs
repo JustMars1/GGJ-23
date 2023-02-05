@@ -56,6 +56,8 @@ public class PlayerControl : MonoBehaviour
 
     const float fireCooldown = 0.2f;
 
+    [HideInInspector] public int[] grenadeCounts = new int[3];
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -63,7 +65,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance != null && GameManager.Instance.Paused) 
+        if (GameManager.Instance != null && GameManager.Instance.Paused)
         {
             return;
         }
@@ -149,6 +151,17 @@ public class PlayerControl : MonoBehaviour
         Vector3 rot = throwRotator.eulerAngles;
         rot.z = facingRight ? angle : 180 - angle;
         throwRotator.eulerAngles = rot;
+    }
+
+    public void UpdateUICounters()
+    {
+        if (GameManager.Instance != null)
+        {
+            for (int i = 0; i < grenadeCounts.Length; i++)
+            {
+                GameManager.Instance.gameplayUI.UpdateGrenadeCount(i, grenadeCounts[i]);
+            }
+        }
     }
 
     void OnGrenadeChanged(int grenadeType)
