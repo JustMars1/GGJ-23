@@ -58,11 +58,11 @@ public class PlayerControl : MonoBehaviour
 
     [HideInInspector] public int[] grenadeCounts = new int[3];
 
-    GameObject originalSpawnPoint;
+    Vector3 originalSpawnPoint;
 
     void Awake()
     {
-        originalSpawnPoint = spawnPoint;
+        originalSpawnPoint = spawnPoint.transform.position;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -163,7 +163,7 @@ public class PlayerControl : MonoBehaviour
 
     public void ResetSpawnPoint() 
     {
-        spawnPoint = originalSpawnPoint;
+        spawnPoint.transform.position = originalSpawnPoint;
         transform.position = spawnPoint.transform.position;
     }
 
