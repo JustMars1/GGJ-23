@@ -39,6 +39,7 @@ public class VineSeed : Seed
         Destroy(rb2D);
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+        AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(poofDuration);
 

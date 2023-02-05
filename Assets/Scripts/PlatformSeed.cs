@@ -38,6 +38,7 @@ public class PlatformSeed : Seed
 
     IEnumerator InstantiatePlatformCo()
     {
+        AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(poofDuration);
         GameObject platform = Instantiate(platformPrefab, transform.position, Quaternion.identity);

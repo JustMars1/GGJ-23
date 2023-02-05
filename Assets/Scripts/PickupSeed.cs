@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickupSeed : MonoBehaviour
 {
     public SeedType type;
+    public AudioClip pickupSound;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,6 +16,8 @@ public class PickupSeed : MonoBehaviour
             player.grenadeCounts[(int)type]++;
             GameManager.Instance.pickups.Add(gameObject);
             player.UpdateUICounters();
+
+            AudioPlayer.Play(pickupSound, isMusic: false, variablePitch: true, variableVolume: true);
         }
     }
 }

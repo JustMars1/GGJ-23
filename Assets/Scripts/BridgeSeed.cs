@@ -11,18 +11,7 @@ public class BridgeSeed : Seed
 
     HashSet<GameObject> collidingObjects = new HashSet<GameObject>();
 
-    protected override void OnExplode()
-    {
-        if (!isStuck && collidingObjects.Count > 0)
-        {
-            Stick();
-        }
-
-        if (!growing && isStuck)
-        {
-            TryGrow();
-        }
-    }
+    protected override void OnExplode() { }
 
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -98,6 +87,7 @@ public class BridgeSeed : Seed
     IEnumerator InstantiateBridgeCo(GameObject secondNode)
     {
         {
+            AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
             GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
             Destroy(poof, poofDuration);
             Destroy(gameObject.GetComponent<SpriteRenderer>());
@@ -133,6 +123,7 @@ public class BridgeSeed : Seed
         renderer.transform.position = origin + dir * targetDistance / 2;
 
         {
+            AudioPlayer.Play(poofSounds[Random.Range(0, poofSounds.Length)], isMusic: false, variablePitch: true, variableVolume: true);
             GameObject poof = Instantiate(poofPrefab, secondNode.transform.position, Quaternion.identity);
             Destroy(poof, poofDuration);
             Destroy(secondNode.GetComponent<SpriteRenderer>());

@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 282436127
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 51101420ba8ac8543bbe9e44c1ce40e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -141,6 +141,9 @@ MonoBehaviour:
   timer: 3
   poofDuration: 0.5
   poofPrefab: {fileID: 7472128634130831700, guid: c06de9fbf489d674789a255339c3e871, type: 3}
+  poofSounds:
+  - {fileID: 8300000, guid: 3398a5f4b87be44caad87799417d511f, type: 3}
+  - {fileID: 8300000, guid: 6559fd1bfcc1343118de5ca15236f578, type: 3}
   rb2D: {fileID: 0}
   sender: {fileID: 0}
   bridgePrefab: {fileID: 6580342025827081258, guid: 87761004a9bc34743b48d0c51fe997d8, type: 3}
