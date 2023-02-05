@@ -105,7 +105,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 7555405132332884012}
+  useTimer: 0
   timer: 3
   poofDuration: 0.5
   poofPrefab: {fileID: 7472128634130831700, guid: c06de9fbf489d674789a255339c3e871, type: 3}

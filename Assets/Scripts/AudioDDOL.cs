@@ -16,22 +16,7 @@ public class AudioDDOL : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
             instance = this;
-        }
-    }
-
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.buildIndex == 0)
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            instance = null;
-
-            if (gameObject != null)
-            {
-                Destroy(gameObject);
-            }
         }
     }
 }
