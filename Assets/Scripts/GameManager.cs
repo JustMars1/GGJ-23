@@ -20,6 +20,12 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    public List<GameObject> vines = new List<GameObject>();
+    public List<GameObject> platforms = new List<GameObject>();
+    public List<GameObject> bridges = new List<GameObject>();
+
+    public List<GameObject> seeds = new List<GameObject>();
+
     bool paused;
     public bool Paused
     {
@@ -58,12 +64,65 @@ public class GameManager : MonoBehaviour
         menu.pausePanel.gameObject.SetActive(false);
         menu.optionsPanel.gameObject.SetActive(false);
 
+        menu.resumeBt.onClick.AddListener(() =>
+        {
+            menu.PlayBtClickSound();
+            Paused = false;
+        });
+
+        menu.restartBt.onClick.AddListener(() =>
+        {
+            menu.PlayBtClickSound();
+            ResetLevel();
+            Paused = false;
+        });
+
+        menu.mainMenuBt.onClick.AddListener(() =>
+        {
+            menu.PlayBtClickSound();
+            SceneManager.LoadScene("Main");
+        });
+
         Paused = false;
     }
 
     public void LoadNextLevel()
     {
         SceneManager.LoadScene("Level" + nextLevelIndex);
+    }
+
+    public void ResetLevel()
+    {
+        foreach (GameObject seed in seeds)
+        {
+            if (seed != null)
+            {
+                Destroy(seed);
+            }
+        }
+
+        seeds.Clear();
+
+        foreach (GameObject platform in platforms)
+        {
+            Destroy(platform);
+        }
+
+        platforms.Clear();
+
+        foreach (GameObject vine in vines)
+        {
+            Destroy(vine);
+        }
+
+        vines.Clear();
+
+        foreach (GameObject bridge in bridges)
+        {
+            Destroy(bridge);
+        }
+
+        bridges.Clear();
     }
 
     void Update()

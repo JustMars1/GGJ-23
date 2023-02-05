@@ -63,6 +63,11 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance != null && GameManager.Instance.Paused) 
+        {
+            return;
+        }
+
         directionalInput.x = Input.GetAxisRaw("Horizontal");
         directionalInput.y = Input.GetAxisRaw("Vertical");
         jump |= Input.GetButtonDown("Jump");

@@ -20,7 +20,12 @@ public class PlatformSeed : Seed
     {
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(poofDuration);
-        Instantiate(platformPrefab, transform.position, Quaternion.identity);
+        GameObject platform = Instantiate(platformPrefab, transform.position, Quaternion.identity);
+
+        if (GameManager.Instance != null) 
+        {
+            GameManager.Instance.platforms.Add(platform);
+        }
 
         Destroy(poof);
         Destroy(gameObject);

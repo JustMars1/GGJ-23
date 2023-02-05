@@ -30,6 +30,11 @@ public abstract class Seed : MonoBehaviour
 
     IEnumerator Start()
     {
+        if (GameManager.Instance != null) 
+        {
+            GameManager.Instance.seeds.Add(gameObject);
+        }
+
         while (timer > 0)
         {
             timerText.text = timer.ToString();

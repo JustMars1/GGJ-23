@@ -48,7 +48,14 @@ public class VineSeed : Seed
         GetComponent<Collider2D>().enabled = false;
         GameObject poof = Instantiate(poofPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(poofDuration);
-        Instantiate(vinePrefab, transform.position, Quaternion.identity);
+
+        GameObject vine = Instantiate(vinePrefab, transform.position, Quaternion.identity);
+
+        if (GameManager.Instance != null) 
+        {
+            GameManager.Instance.vines.Add(vine);
+        }
+
         Destroy(poof);
         Destroy(gameObject);
     }

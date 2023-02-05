@@ -106,6 +106,12 @@ public class BridgeSeed : Seed
         Vector3 dir = (secondNode.transform.position - transform.position).normalized;
 
         GameObject bridge = Instantiate(bridgePrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x))));
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.bridges.Add(bridge);
+        }
+
         Vector2 size = bridge.GetComponentInChildren<SpriteRenderer>().size;
         float targetDistance = (secondNode.transform.position - transform.position).magnitude;
         SpriteRenderer renderer = bridge.transform.GetChild(0).GetComponent<SpriteRenderer>();

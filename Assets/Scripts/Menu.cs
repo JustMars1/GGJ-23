@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
     public Button playBt, optionsBt, quitBt, closeBt;
     public RectTransform startPanel, optionsPanel, pausePanel;
     public Toggle fullScreenToggle, vSyncToggle;
+    public Button resumeBt, restartBt, mainMenuBt;
 
     const string MUSIC_VOLUME_KEY = "MusicVolume";
     const string SFX_VOLUME_KEY = "SFXVolume";

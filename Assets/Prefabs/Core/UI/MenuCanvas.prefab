@@ -845,6 +845,9 @@ MonoBehaviour:
   pausePanel: {fileID: 8244532809706173457}
   fullScreenToggle: {fileID: 5624965663207489333}
   vSyncToggle: {fileID: 6936024454308035736}
+  resumeBt: {fileID: 8747187588116414459}
+  restartBt: {fileID: 3900478741332600447}
+  mainMenuBt: {fileID: 8069343931874965347}
 --- !u!1 &2855185527120952942
 GameObject:
   m_ObjectHideFlags: 0

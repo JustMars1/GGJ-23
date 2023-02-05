@@ -63,6 +63,7 @@ public class GameplayUI : MonoBehaviour
 
     IEnumerator FadeAimInfoInCo()
     {
+        yield return new WaitForSeconds(0.2f);
         Color c = aimInfo.color;
 
         while (c.a < 1)
@@ -79,6 +80,7 @@ public class GameplayUI : MonoBehaviour
 
     IEnumerator FadeAimInfoOutCo()
     {
+        yield return new WaitForSeconds(0.2f);
         Color c = aimInfo.color;
 
         while (c.a > 0)
