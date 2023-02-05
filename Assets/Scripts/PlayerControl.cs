@@ -63,6 +63,11 @@ public class PlayerControl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void Start() 
+    {
+        UpdateUICounters();
+    }
+
     void Update()
     {
         if (GameManager.Instance != null && GameManager.Instance.Paused)
