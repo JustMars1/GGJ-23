@@ -11,6 +11,7 @@ public enum SeedType
 public abstract class Seed : MonoBehaviour
 {
     public TextMeshPro timerText;
+    public bool useTimer;
     public int timer = 3;
     public float poofDuration = 0.5f;
     public GameObject poofPrefab;
@@ -36,30 +37,36 @@ public abstract class Seed : MonoBehaviour
             GameManager.Instance.seeds.Add(gameObject);
         }
 
-        while (timer > 0)
+        if (useTimer)
         {
-            timerText.text = timer.ToString();
-            yield return new WaitForSeconds(1);
-            timer--;
+            while (timer > 0)
+            {
+                timerText.text = timer.ToString();
+                yield return new WaitForSeconds(1);
+                timer--;
+            }
+
+            timerText.text = "";
+
+            if (rb2D != null)
+            {
+                rb2D.simulated = true;
+            }
+            GetComponent<Collider2D>().enabled = true;
+            transform.SetParent(null);
+
+            if (sender.currentThrowable == this)
+            {
+                sender.currentThrowable = null;
+            }
+
+            exploding = true;
+            OnExplode();
         }
-
-        timerText.text = "";
-
-
-        if (rb2D != null)
+        else
         {
-            rb2D.simulated = true;
+            timerText.text = "";
         }
-        GetComponent<Collider2D>().enabled = true;
-        transform.SetParent(null);
-
-        if (sender.currentThrowable == this)
-        {
-            sender.currentThrowable = null;
-        }
-
-        exploding = true;
-        OnExplode();
     }
 
     void LateUpdate()

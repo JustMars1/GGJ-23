@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 8441692428170227337}
+  useTimer: 1
   timer: 3
   poofDuration: 0.5
   poofPrefab: {fileID: 8145950664778433156, guid: a3f6b77cde5314c4fa6066f9d8d186b3, type: 3}

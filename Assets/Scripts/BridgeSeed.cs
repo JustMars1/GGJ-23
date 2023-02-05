@@ -11,18 +11,7 @@ public class BridgeSeed : Seed
 
     HashSet<GameObject> collidingObjects = new HashSet<GameObject>();
 
-    protected override void OnExplode()
-    {
-        if (!isStuck && collidingObjects.Count > 0)
-        {
-            Stick();
-        }
-
-        if (!growing && isStuck)
-        {
-            TryGrow();
-        }
-    }
+    protected override void OnExplode() { }
 
     void OnCollisionEnter2D(Collision2D other)
     {
