@@ -87,6 +87,12 @@ public class GameManager : MonoBehaviour
             UnityEvent afterFade = new UnityEvent();
             afterFade.AddListener(fade.FadeIn);
             afterFade.AddListener(ResetLevel);
+
+            if (player != null) 
+            {
+                afterFade.AddListener(player.ResetSpawnPoint);
+            }
+            
             fade.FadeOut(afterFade);
             Paused = false;
         });
